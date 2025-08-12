@@ -40,11 +40,6 @@ add_executable(${CMAKE_PROJECT_NAME})
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
-# 添加 drivers_bsp 子目录
-add_subdirectory(drivers_bsp)
-
-# 链接 drivers_bsp 下的库（假设drivers_bsp生成了一个名为 drivers_bsp_lib 的库）
-target_link_libraries(${PROJECT_NAME} PRIVATE drivers_bsp_lib)
 
 # Link directories setup 设置链接库搜索路径
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
