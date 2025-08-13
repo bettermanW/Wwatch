@@ -40,7 +40,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
         test/test_oled.c
         system/Inc/draw.h
-        system/src/draw.c)
+        system/src/draw.c
+        common/ulti.h)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -62,6 +63,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         test
         drivers_bsp/oled
         system/Inc
+        common
 )
 
 # Add project symbols (macros)  添加编译宏定义
