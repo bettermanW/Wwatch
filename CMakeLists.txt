@@ -55,6 +55,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     # 编译器会在这个路径下查找 #include "xxx.h"。
+        test
 )
 
 # Add project symbols (macros)  添加编译宏定义
