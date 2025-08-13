@@ -146,3 +146,18 @@ void OLED_ShowFrame() {
         OLED_Send(sendBuffer, OLED_COLUMN + 1);
     }
 }
+
+/**
+ * @brief 设置一个像素点
+ * @param x 横坐标
+ * @param y 纵坐标
+ * @param color 颜色
+ */
+void OLED_SetPixel(uint8_t x, uint8_t y, OLED_ColorMode color) {
+    if (x >= OLED_COLUMN || y >= OLED_ROW) return;
+    if (!color) {
+        OLED_GRAM[y / 8][x] |= 1 << (y % 8);
+    } else {
+        OLED_GRAM[y / 8][x] &= ~(1 << (y % 8));
+    }
+}

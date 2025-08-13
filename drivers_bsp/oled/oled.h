@@ -23,4 +23,5 @@ void OLED_SetColorMode(OLED_ColorMode mode);
 
 void OLED_NewFrame();
 void OLED_ShowFrame();
+void OLED_SetPixel(uint8_t x, uint8_t y, OLED_ColorMode color);
 #endif //OLED_H
