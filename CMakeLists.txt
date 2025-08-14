@@ -38,7 +38,8 @@ enable_language(C ASM)
 # 创建一个名为 NwatchCopy 的 可执行文件目标（最终生成 .elf, .hex, .bin）
 add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
-        test/test_oled.c
+        test/test.c
+        test/test_ulti.c
         system/Inc/draw.h
         system/src/draw.c
         common/ulti.h)
