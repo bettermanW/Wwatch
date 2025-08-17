@@ -45,7 +45,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         common/ulti.h
         test/test_draw.c
         system/Inc/display.h
-        system/src/display.c)
+        system/src/display.c
+        test/test_display.c)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
