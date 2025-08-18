@@ -20,5 +20,5 @@ void display_set(display_f);
 void display_load();
 
 draw_f display_setDrawFunc(draw_f func);
-
+void display_update(void);
 #endif //DISPLAY_H

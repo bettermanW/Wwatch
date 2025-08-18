@@ -45,3 +45,24 @@ draw_f display_setDrawFunc(const draw_f func) {
     return old; // 返回原来的绘图函数指针
 }
 
+void display_update(void) {
+    // 帧率限制
+    unsigned char now = HAL_GetTick();
+    if (now - lastDraw < fpsMs) return;
+    lastDraw = now;
+
+    // 执行绘制
+    display_t busy = DISPLAY_DONE;
+#if COMPILE_ANIMATIONS // 不显式定义默认为0
+    // animation_update(); // 假设已实现
+    if (drawFunc) busy = drawFunc();
+#else
+    if (drawFunc) busy = drawFunc();
+#endif
+
+    // 刷新屏幕
+
+    draw_end();
+
+}
+
