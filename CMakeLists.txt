@@ -72,6 +72,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         drivers_bsp/oled
         system/Inc
         common
+        apps/Inc
 )
 
 # Add project symbols (macros)  添加编译宏定义
