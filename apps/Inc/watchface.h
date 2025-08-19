@@ -10,5 +10,5 @@
 
 // 显存
 
-void watchfaceOpen(void);
+display_f watchfaceOpen(void);
 #endif //WATCHFACE_H

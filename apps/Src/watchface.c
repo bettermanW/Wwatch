@@ -2,15 +2,18 @@
 // Created by 14419 on 25-8-18.
 //
 #include "watchface.h"
-uint8_t OLED_GRAM2[512];
 uint8_t iAng1 = 0; // 旋转角度
-uint8_t vert1[8][3]; // 保存立方体旋转后每个顶点的屏幕坐标
+uint8_t vert1[8][3]; // 保存立方体旋转后每个顶点的屏幕坐标，8个顶点每个三个坐标
 int Cnt1, Cnt1v; // 主机数器，记录动画或旋转的状态。 控制增量
 static const int nvert1 = 8; // 立方体8个顶点
 static const int nfaces1 = 6; // 6个面
 // 6个面的顶点索引坐标
 static const int faces1[6][4] ={{0,1,2,3},{1,5,6,2},{5,4,7,6},{4,0,3,7},{0,4,5,1},{3,2,6,7}};
 uint8_t x11=0, x21=0, y11=0, y21=0; // 绘制线段时的起始位置和终止时的2D位置
+
+static display_t draw(void);
+static void __SysTick(void);
+
 uint8_t vertices[1440][3] =
 {{ 42, 10, 1},{ 85, 10, 1},{ 85, 53, 1},{ 42, 53, 1},{ 51, 19, 1},{ 76, 19, 1},{ 76, 44, 1},{ 51, 44, 1},
 { 41, 11, 1},{ 83, 9, 1},{ 85, 52, 1},{ 42, 53, 1},{ 51, 20, 1},{ 76, 19, 1},{ 77, 44, 1},{ 52, 45, 1},
@@ -194,21 +197,12 @@ uint8_t vertices[1440][3] =
 { 43, 10, 1},{ 86, 12, 1},{ 84, 54, 1},{ 42, 53, 1},{ 51, 18, 1},{ 76, 19, 1},{ 75, 44, 1},{ 50, 43, 1}
 };
 
-
-static display_t draw(void);
-#define NOINVERT	false
-// uint8_t OLED_GRAM[1024];
-
-static  void OLED_DrawPoint(uint8_t x,uint8_t y,uint8_t t);
-
-static  void OLED_DrawLine(uint16_t x11, uint16_t y11, uint16_t x21, uint16_t y21);
-
-/*
- * @brief 增加角度索引，每帧让立方体动起来
+/**
+ * @brief 绘制旋转立方体
+ * @return 返回是否绘制完成
  */
-static void __SysTick(void);
 static display_t draw() {
-    /* 1、 系统节拍更新 */
+    // /* 1、 系统节拍更新 */
     __SysTick();
     /* 2、 获取当前角度下的立方体坐标*/
     for(Cnt1v = 0; Cnt1v < nvert1; ++Cnt1v){
@@ -223,107 +217,56 @@ static display_t draw() {
         y11 = vert1[faces1[Cnt1][0]][1]-1;
         x21 = vert1[faces1[Cnt1][1]][0]-34;
         y21 = vert1[faces1[Cnt1][1]][1]-1;
-        OLED_DrawLine(x11, y11, x21, y21);
+        OLED_DrawLine(x11, y11, x21, y21, 0);
 
         x11 = vert1[faces1[Cnt1][1]][0]-34;
         y11 = vert1[faces1[Cnt1][1]][1]-1;
         x21 = vert1[faces1[Cnt1][2]][0]-34;
         y21 = vert1[faces1[Cnt1][2]][1]-1;
-        OLED_DrawLine(x11, y11, x21, y21);
+        OLED_DrawLine(x11, y11, x21, y21, 0);
 
         x11 = vert1[faces1[Cnt1][2]][0]-34;
         y11 = vert1[faces1[Cnt1][2]][1]-1;
         x21 = vert1[faces1[Cnt1][3]][0]-34;
         y21 = vert1[faces1[Cnt1][3]][1]-1;
-        OLED_DrawLine(x11, y11, x21, y21);
+        OLED_DrawLine(x11, y11, x21, y21, 0);
 
 
         x11 = vert1[faces1[Cnt1][3]][0]-34;
         y11 = vert1[faces1[Cnt1][3]][1]-1;
         x21 = vert1[faces1[Cnt1][0]][0]-34;
         y21 = vert1[faces1[Cnt1][0]][1]-1;
-        OLED_DrawLine(x11, y11, x21, y21);
+        OLED_DrawLine(x11, y11, x21, y21, 0);
 
     }
-    /* 4、 将线框图到处为位图 + 清楚缓冲区*/
-    draw_bitmap(0, 0, (const uint8_t *)OLED_GRAM2, 64, 64, NOINVERT, 0);
-    memset(&OLED_GRAM2, 0x00, 1024/2);
-    /* 5、 绘制日期和时间、动态更新*/
-    /* 6、 点出图标绘制逻辑*/
-    /* 7、 USB连接与充电图标（含动画）*/
-    /* 8， 秒表图标（条件编译）*/
-    /* 9、 返回绘制状态*/
+    // /* 5、 绘制日期和时间、动态更新*/
+    // /* 6、 点出图标绘制逻辑*/
+    // /* 7、 USB连接与充电图标（含动画）*/
+    // /* 8， 秒表图标（条件编译）*/
+    // /* 9、 返回绘制状态*/
     return DISPLAY_DONE;
 }
 
+/**
+ * @brief 增加角度索引，每帧让立方体动起来
+ */
 static void __SysTick(void) {
     iAng1++;
     if (iAng1 == 180) iAng1 = 0;
 }
-void watchfaceOpen(void) {
+
+/**
+ * @brief 手表主界面初始入口
+ * @return
+ */
+display_f watchfaceOpen(void) {
 
     // 禁止在主界面显示 FPS
     //appConfig.showFPS = 0;
     // 将函数注册为当前界面的绘图函数每次刷新时会自动调用它
     display_setDrawFunc(draw);
+    //draw();
     // 设置当前界面的按钮响应函数；
     //buttons_setFuncs(up, menu_select, down);
-
-}
-
-
-
-//画点
-//x:0~63
-//y:0~63
-//t:1 填充 0,清空
-static  void OLED_DrawPoint(uint8_t x,uint8_t y,uint8_t t) {
-    //对应 byte __OLED_GRAM[512];	  // x= 64 ,y=8
-    //变换一哈形式
-    uint8_t pos,bx,temp=0;
-    if(x>63||y>63)return;//超出范围了.
-    pos=y/8;
-    bx=y%8;
-    temp=1<<(bx);
-    if(t) OLED_GRAM2[64*pos+x] |= temp;  // 做到的效果是竖着存放 竖着为y ，横着为x
-    else OLED_GRAM2[64*pos+x]&=~temp;
-}
-
-static  void OLED_DrawLine(uint16_t x11, uint16_t y11, uint16_t x21, uint16_t y21)
-{
-    uint16_t t;
-    int xerr=0,yerr=0,delta_x,delta_y,distance;
-    int incx,incy,uRow,uCol;
-    delta_x=x21-x11; //计算坐标增量
-    delta_y=y21-y11;
-    uRow=x11;
-    uCol=y11;
-    if(delta_x>0)incx=1; //设置单步方向
-    else if(delta_x==0)incx=0;//垂直线
-    else {incx=-1;delta_x=-delta_x;}
-    if(delta_y>0)incy=1;
-    else if(delta_y==0)incy=0;//水平线
-    else{incy=-1;delta_y=-delta_y;}
-    if( delta_x>delta_y)distance=delta_x; //选取基本增量坐标轴
-    else distance=delta_y;
-    for(t=0;t<=distance+1;t++ )//画线输出
-    {
-        OLED_DrawPoint(uRow,uCol,1);//画点
-        xerr+=delta_x ;
-        yerr+=delta_y ;
-        if(xerr>distance)
-        {
-            xerr-=distance;
-            uRow+=incx;
-        }
-        if(yerr>distance)
-        {
-            yerr-=distance;
-            uCol+=incy;
-        }
-    }
-}
-
-void test() {
-    OLED_DrawLine()
+    return DISPLAY_DONE;
 }
