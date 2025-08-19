@@ -14,7 +14,7 @@ static uint8_t *g_framebuffer;  // 指向屏幕的帧缓冲区，是一个字节
 static draw_f drawFunc; // 回调函数，进行屏幕的逐帧刷新
 
 
-static unsigned char lastDraw = 0;  // 上一次绘制的时间戳
+static uint32_t lastDraw = 0;  // 上一次绘制的时间戳
 static uint8_t fpsMs = 33;   // 目标30 FPS (1000/30 ≈ 33 ms)
 /**
  * @brief 设置当前页面的加载函数（一般用于初始化界面时调用）。
@@ -47,7 +47,7 @@ draw_f display_setDrawFunc(const draw_f func) {
 
 void display_update(void) {
     // 帧率限制
-    unsigned char now = HAL_GetTick();
+    uint32_t now = HAL_GetTick();
     if (now - lastDraw < fpsMs) return;
     lastDraw = now;
 
