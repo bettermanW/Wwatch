@@ -126,3 +126,52 @@ void draw_bitmap(uint8_t x, uint8_t yy, const uint8_t* bitmap, uint8_t w, uint8_
 		}
 	}
 }
+
+
+/**
+ * @brief 在帧缓冲区 buff 的指定位置写入一个字节值，用于控制 OLED 屏幕上 8 像
+ * @param buff 指向帧缓冲区的指针
+ * @param x 水平像素坐标
+ * @param y 垂直像素坐标
+ * @param val 要写入的字节值
+ */
+static void setBuffByte(uint8_t* buff, uint8_t x, uint8_t y, uint8_t val)//, byte colour)
+{
+	// 帧缓冲区的字节索引 y / 8当前page,
+	const uint16_t pos = x + (y / 8) * FRAME_WIDTH;
+	buff[pos] |= val;
+}
+
+/*定义字体集合，大小是 5 * 7*/
+const uint8_t smallFont[][5]  = {
+	CHARACTER_SET
+  };
+
+/**
+ * @brief 函数逐字符绘制字符串
+ * @param string 指向要绘制的字符串
+ * @param invert 是否反转模式
+ * @param x 起始坐标x
+ * @param y 起始坐标y
+ */
+void draw_string(const char* string, bool invert, uint8_t x, uint8_t y)
+{
+	uint8_t charCount = 0; // 记录档期那字符数
+
+	while(*string) // 遍历字符串（ASCII值），直到遇到空字符
+	{
+		const char c = *string - 0x20; // 映射字体数组索引
+		const uint8_t xx = x + (charCount*7); // 计算当前字符的水平绘制位置（每个字符占用 7 像素宽度）
+		// 调用 `draw_bitmap` 函数绘制单个字符的位图
+		draw_bitmap(xx, y, smallFont[(uint8_t)c], SMALLFONT_WIDTH, SMALLFONT_HEIGHT, invert, 0);
+		if(invert) // 额外绘制垂直线条，增强反转效果
+		{
+			if(xx > 0)
+				setBuffByte(g_framebuffer, xx-1, y, 0xFF);//, WHITE);
+			if(xx < FRAME_WIDTH - 5)
+				setBuffByte(g_framebuffer, xx+5, y, 0xFF);//, WHITE);
+		}
+		string++;
+		charCount++;
+	}
+}
