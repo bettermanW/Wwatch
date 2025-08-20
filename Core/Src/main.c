@@ -25,7 +25,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
+  #include "test.h"
+ #include "button.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,6 +104,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    char buff[20];
+    uint8_t cnt = test_bitcount();
+
+    sprintf(buff, "bitcount = %d\r\n", cnt);
+    HAL_UART_Transmit(&huart2, (uint8_t*)buff, 20, HAL_MAX_DELAY);
+    HAL_Delay(1000);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
