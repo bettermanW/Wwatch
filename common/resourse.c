@@ -119,3 +119,18 @@ const uint8_t colon[] = {
     0x00, 0xC3, 0xC3, 0xC3, 0xC3, 0x00,
     0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x00
   };
+
+/**
+ *
+ * @param val
+ * @return
+ */
+uint8_t div10(const uint8_t val)
+{
+  return val / 10;
+}
+
+uint8_t mod10(const uint8_t val)
+{
+  return val % 10;
+}
