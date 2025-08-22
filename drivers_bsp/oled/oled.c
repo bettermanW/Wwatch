@@ -161,3 +161,16 @@ void OLED_SetPixel(uint8_t x, uint8_t y, OLED_ColorMode color) {
         OLED_GRAM[y / 8][x] &= ~(1 << (y % 8));
     }
 }
+
+/*
+ * @brief 获得OLED的显存
+ * @param 宽
+ * @param 高
+ * @param 色
+ */
+void * OLED_GetFrameBuffer(uint32_t *pXres, uint32_t *pYres, uint32_t *pBpp) {
+    *pXres = OLED_COLUMN;        // 返回行数（实际是高度）
+    *pYres = OLED_ROW;     // 返回列数（实际是宽度）
+    *pBpp  = 1;               // 1位每像素：0=黑，1=白（或反之）
+    return OLED_GRAM;         // 返回显存地址
+}
