@@ -4,6 +4,8 @@
 
 #include "button.h"
 
+static void processButtons();
+
 /**
  * @brief 保存旧地回调函数，设置新地回调函数
  * @param btn 哪一个按钮
@@ -28,4 +30,93 @@ void buttons_setFuncs(button_f btn1, button_f btn2, button_f btn3)
     buttons[BTN_2].onPress = btn2;
     buttons[BTN_3].onPress = btn3;
 }
+
+/**
+ * @brief 每 10ms 调用一次，执行按键轮询处理
+ */
+void buttons_update() {
+    static uint32_t lastUpdate;
+    uint32_t now = HAL_GetTick();
+
+    if ((uint32_t) (now - lastUpdate) >= 10) {
+        lastUpdate = now;
+        processButtons();
+    }
+}
+
+/**
+ * @brief 统计二进制数中 1 的个数
+ * @param val 8位整数，1个byte
+ * @return  val中二进制位为 1 的个数*
+ */
+static uint8_t bitCount(uint8_t val) {
+    uint8_t count = 0;
+    // 每次右移一位，相当于逐位检查 `val` 的每一位是否为 1
+    for (; val; val >>= 1)
+        // 取出当前最低位（0或1）并累加到 `count`
+        count += val & 1;
+    return count;
+}
+
+/**
+ * @brief 按键去抖动 + 回调处理
+ * @param button
+ * @param isPressed
+ */
+static void processButton(s_button *button, bool isPressed) {
+    /*2.去抖处理*/
+
+    // // 状态计数器左移一位，相当于记录一个滑动窗口，存储最近 N 次采样结果
+    button->counter <<= 1;
+    if (isPressed == 1) // 为 0为按下，所以非1 为按下
+    {
+        // 如果当前检测到 **按下**，就在最低位写 `1`就保存了一段时间内的按键采样历史
+        button->counter |= 1;
+
+        /*3. 判断是否足够“稳定”按下*/
+        // 去抖动策略
+        if (bitCount(button->counter) >= BTN_IS_PRESSED) {
+            /*4. 第一次按下时记录时间*/
+            if (!button->processed) {
+                button->pressedTime = HAL_GetTick();
+                button->processed = true; // 表示已经按下一次
+            }
+
+            /*5. 执行回调函数*/
+            // 绑定了函数指针 && 调用回调函数成功 && 保证本次只执行一次回调
+            if (!button->funcDone && button->onPress != NULL && button->onPress()) {
+                button->funcDone = true;
+                // 蜂鸣器 + LED
+            }
+        }
+    } else /*6. 松开时恢复状态*/
+    {
+        // 如果当前采样结果是 **没按下**，则继续观察去抖计数器
+        if (bitCount(button->counter) <= BTN_NOT_PRESSED) {
+            button->processed = false;
+            button->funcDone = false;
+        }
+    }
+}
+
+
+/**
+ * @brief 轮询所有按键状态并调用处理函数
+ */
+static void processButtons() {
+    // Get button pressed states
+
+    // 从具体 IO 获取当前是否按下（逻辑 0 为按下）
+    bool isPressed[BTN_COUNT];
+    isPressed[BTN_1] = KEY1;
+    isPressed[BTN_2] = KEY2;
+    // isPressed[BTN_3] = KEY0;
+
+
+    // Process each button // 每个按键分别处理（注意取反逻辑）
+    LOOPR(BTN_COUNT, i)
+        processButton(&buttons[i], !isPressed[i]);
+}
+
+
 

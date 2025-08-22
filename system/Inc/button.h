@@ -6,6 +6,9 @@
 #define BUTTON_H
 #include "stdbool.h"
 #include "stdint.h"
+#include "stm32f1xx_hal.h"
+#include "button_driver.h"
+#include "ulti.h"
 // 定义按钮索引编号
 typedef enum {
     BTN_1 = 0,
@@ -33,6 +36,11 @@ typedef struct {
 } s_button;
 /*即每个按钮 `BTN_1 ~ BTN_3` 都有一个 `s_button` 实例，用数组统一管理。*/
 static s_button buttons[BTN_COUNT];
+
+// 按键消抖逻辑中的阈值（threshold）
+#define BTN_IS_PRESSED	1 // 认为按键真的按下去 所需的最少 1 的数量。
+#define BTN_NOT_PRESSED	1 // 认为按键真的松开 所需的最多 1 的数量。
+
 
 void buttons_update(void);
 button_f buttons_setFunc(btn_t btn, button_f func);
