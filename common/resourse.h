@@ -6,7 +6,8 @@
 #define RESOURSE_H
 
 #include <stdint.h>
-
+#include "draw.h"
+#include "typedef.h"
 #define SMALLFONT_WIDTH 5
 #define SMALLFONT_HEIGHT 8
 extern const uint8_t small2Font[][22];
@@ -22,5 +23,13 @@ extern const uint8_t colon[];
 uint8_t div10(const uint8_t val);
 
 uint8_t mod10(const uint8_t val);
+
+extern const uint8_t battIconEmpty[];
+extern const uint8_t battIconLow[];
+extern const uint8_t battIconHigh[];
+extern const uint8_t battIconFull[];
+
+void drawBattery();
+
 
 #endif //RESOURSE_H
