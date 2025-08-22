@@ -10,7 +10,10 @@
 #define FONT_SMALL2_WIDTH 11
 #define FONT_SMALL2_HEIGHT 16
 
+#define NOINVERT false
 
+#define FRAME_HEIGHT 64
+#define FRAME_WIDTH 128
 
 // 定义 12 个月份的索引（0-11），用于 date_s 结构中的 month 字段
 typedef enum
