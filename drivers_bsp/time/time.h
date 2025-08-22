@@ -4,5 +4,6 @@
 
 #ifndef TIME_H
 #define TIME_H
-
+#include "typedef.h"
+void time_init();
 #endif //TIME_H
