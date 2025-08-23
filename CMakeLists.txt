@@ -38,6 +38,14 @@ enable_language(C ASM)
 # 创建一个名为 NwatchCopy 的 可执行文件目标（最终生成 .elf, .hex, .bin）
 add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
+        test/test.c
+        test/test_ulti.c
+        system/Inc/draw.h
+        system/src/draw.c
+        common/ulti.h
+        common/typedef.h
+        common/resourse.c
+        common/resourse.h
         apps/Inc/menu.h
         apps/Src/menu.c)
 
@@ -60,6 +68,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # 编译器会在这个路径下查找 #include "xxx.h"。
         test
         drivers_bsp/oled
+        system/Inc
+        common
         apps/Inc
 )
 
