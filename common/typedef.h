@@ -10,6 +10,9 @@
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
 #define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)
+
+#define SMALLFONT_WIDTH 5 // 字体宽度为 5 像素
+#define SMALLFONT_HEIGHT 8 // 字体高度为 8 像素
 #define FONT_SMALL2_WIDTH 11
 #define FONT_SMALL2_HEIGHT 16
 
@@ -17,6 +20,37 @@
 
 #define FRAME_HEIGHT 64
 #define FRAME_WIDTH 128
+
+/**
+ * @brief 显示状态枚举
+ *
+ * 用于指示显示操作的完成状态：
+ * - DISPLAY_DONE: 显示已完成，无需进一步处理
+ * - DISPLAY_BUSY: 显示正在进行中（如动画播放），需要继续处理
+ */
+typedef enum
+{
+    DISPLAY_DONE,   ///< 显示操作已完成
+    DISPLAY_BUSY,   ///< 显示操作正在进行中（通常用于动画或过渡效果）
+} display_t;
+
+/**
+ * @brief 绘制函数指针类型
+ *
+ * 定义了一个函数指针类型，指向无参数且返回display_t状态的函数。
+ * 通常用于需要多帧渲染的动画或渐进式显示功能。
+ *
+ * @return display_t 返回显示状态（DONE或BUSY）
+ */
+typedef display_t (*draw_f)(void);
+
+/**
+ * @brief 显示函数指针类型
+ *
+ * 定义了一个函数指针类型，指向无参数且无返回值的函数。
+ * 通常用于单次执行的静态显示功能，不需要状态反馈。
+ */
+typedef void (*display_f)(void);
 
 // 定义 12 个月份的索引（0-11），用于 date_s 结构中的 month 字段
 typedef enum
