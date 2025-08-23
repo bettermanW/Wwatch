@@ -6,8 +6,6 @@
 static uint32_t g_xres, g_yres, g_bpp; // 屏幕分辨率
 static uint8_t *g_framebuffer;  // 指向实际OLED的缓冲区，所有绘图都写入这个地址
 
-#define FRAME_HEIGHT 64
-#define FRAME_WIDTH 128
 /**
  * @brief 从特定内存数据读取位图像素数据
  * @param loc 指向位图数据的某个位置的指针（Flash or RAM)
