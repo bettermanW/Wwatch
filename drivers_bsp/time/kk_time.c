@@ -127,7 +127,22 @@ static uint32_t RTC_ReadTimeCounter(RTC_HandleTypeDef *hrtc)
  */
 HAL_StatusTypeDef KK_RTC_SetTime(struct tm *time){
 	uint32_t unixTime = mktime(time);
-	return RTC_WriteTimeCounter(&hrtc, unixTime);
+    HAL_StatusTypeDef status = RTC_WriteTimeCounter(&hrtc, unixTime);
+    
+    if(status == HAL_OK) {
+        // 关键步骤：设置成功后，立即更新全局变量 timeDate
+        timeDate.date.year  = (time->tm_year + 1900) ; // 2025 -> 25
+        timeDate.date.month = time->tm_mon;                 // 8 (9月)
+        timeDate.date.date  = time->tm_mday;                // 23
+        timeDate.date.day   = time->tm_wday;                // 自动计算出的星期几
+        
+        timeDate.time.hour = time->tm_hour;
+        timeDate.time.mins = time->tm_min;
+        timeDate.time.secs = time->tm_sec;
+        // 根据小时计算AM/PM
+        timeDate.time.ampm = (time->tm_hour < 12) ? 'A' : 'P';
+    }
+    return status;
 }
 
 /**
@@ -135,8 +150,22 @@ HAL_StatusTypeDef KK_RTC_SetTime(struct tm *time){
  * @retval 时间
  */
 struct tm *KK_RTC_GetTime() {
-  time_t unixTime = RTC_ReadTimeCounter(&hrtc);
-  return gmtime(&unixTime);
+    time_t unixTime = RTC_ReadTimeCounter(&hrtc);
+    struct tm *time = gmtime(&unixTime);
+    
+    if(time != NULL) {
+        timeDate.date.year  = (time->tm_year + 1900);
+        timeDate.date.month = time->tm_mon;
+        timeDate.date.date  = time->tm_mday;
+        timeDate.date.day   = time->tm_wday;
+        
+        timeDate.time.hour = time->tm_hour;
+        timeDate.time.mins = time->tm_min;
+        timeDate.time.secs = time->tm_sec;
+        timeDate.time.ampm = (time->tm_hour < 12) ? 'A' : 'P';
+    }
+    
+    return time;
 }
 
 void KK_RTC_Init(){
@@ -147,17 +176,13 @@ void KK_RTC_Init(){
 	}
 	struct tm time = {
 		  .tm_year = 2025 - 1900,
-		  .tm_mon = 9 - 1,
+		  .tm_mon = 8 - 1,
 		  .tm_mday = 23,
-		  .tm_hour = 23,
-		  .tm_min = 59,
+		  .tm_hour = 10,
+		  .tm_min = 57,
 		  .tm_sec = 55,
 	};
-    timeDate.date.year  = time.tm_year + 1900;  // 年份
-    timeDate.date.month = time.tm_mon + 1;  //
-    timeDate.date.date  = time.tm_mday;  // 日期
-    timeDate.date.day   = DAY_FRI;  // 星期二
-    timeDate.time.ampm = ' ';  // 24小时制
+    mktime(&time);
 	KK_RTC_SetTime(&time);
 	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, RTC_INIT_FLAG);
 
