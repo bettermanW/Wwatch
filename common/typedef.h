@@ -9,7 +9,7 @@
 
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
-
+#define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)
 #define FONT_SMALL2_WIDTH 11
 #define FONT_SMALL2_HEIGHT 16
 
@@ -36,15 +36,15 @@ typedef enum
 } month_t;
 
 // 定义一周 7 天的索引（0-6）
-typedef enum
-{
-    DAY_MON = 0,
-    DAY_TUE = 1,
-    DAY_WED = 2,
-    DAY_THU = 3,
-    DAY_FRI = 4,
-    DAY_SAT = 5,
-    DAY_SUN = 6,
+// 修改为与struct tm一致（0=星期日）
+typedef enum {
+    DAY_SUN = 0,  // 0 = 星期日
+    DAY_MON = 1,  // 1 = 星期一
+    DAY_TUE = 2,  // 2 = 星期二
+    DAY_WED = 3,  // 3 = 星期三
+    DAY_THU = 4,  // 4 = 星期四
+    DAY_FRI = 5,  // 5 = 星期五
+    DAY_SAT = 6,  // 6 = 星期六
 } day_t;
 
 // 存储时间信息，包括秒、分钟、小时和 AM/PM 指示

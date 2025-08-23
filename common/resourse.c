@@ -174,13 +174,13 @@ uint8_t mod10(const uint8_t val)
 }
 
 const char days[7][BUFFSIZE_STR_DAYS]  = {
+  "Sun",
   "Mon",
   "Tue",
   "Wed",
   "Thu",
   "Fri",
-  "Sat",
-  "Sun"
+  "Sat"
 };
 
 const char months[12][BUFFSIZE_STR_MONTHS]  = {
