@@ -146,6 +146,18 @@ void OLED_ShowFrame() {
         OLED_Send(sendBuffer, OLED_COLUMN + 1);
     }
 }
+/*
+ * @brief 获得OLED的显存
+ * @param 宽
+ * @param 高
+ * @param 色
+ */
+void * OLED_GetFrameBuffer(uint32_t *pXres, uint32_t *pYres, uint32_t *pBpp) {
+    *pXres = OLED_COLUMN;        // 返回行数（实际是高度）
+    *pYres = OLED_ROW;     // 返回列数（实际是宽度）
+    *pBpp  = 1;               // 1位每像素：0=黑，1=白（或反之）
+    return OLED_GRAM;         // 返回显存地址
+}
 
 /**
  * @brief 设置一个像素点
@@ -159,5 +171,65 @@ void OLED_SetPixel(uint8_t x, uint8_t y, OLED_ColorMode color) {
         OLED_GRAM[y / 8][x] |= 1 << (y % 8);
     } else {
         OLED_GRAM[y / 8][x] &= ~(1 << (y % 8));
+    }
+}
+
+/**
+ * @brief 绘制一条线段
+ * @param x1 起始点横坐标
+ * @param y1 起始点纵坐标
+ * @param x2 终止点横坐标
+ * @param y2 终止点纵坐标
+ * @param color 颜色
+ * @note 此函数使用Bresenham算法绘制线段
+ */
+void OLED_DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, OLED_ColorMode color) {
+    static uint8_t temp = 0;
+    if (x1 == x2) {
+        if (y1 > y2) {
+            temp = y1;
+            y1 = y2;
+            y2 = temp;
+        }
+        for (uint8_t y = y1; y <= y2; y++) {
+            OLED_SetPixel(x1, y, color);
+        }
+    } else if (y1 == y2) {
+        if (x1 > x2) {
+            temp = x1;
+            x1 = x2;
+            x2 = temp;
+        }
+        for (uint8_t x = x1; x <= x2; x++) {
+            OLED_SetPixel(x, y1, color);
+        }
+    } else {
+        // Bresenham直线算法
+        int16_t dx = x2 - x1;
+        int16_t dy = y2 - y1;
+        int16_t ux = ((dx > 0) << 1) - 1;
+        int16_t uy = ((dy > 0) << 1) - 1;
+        int16_t x = x1, y = y1, eps = 0;
+        dx = abs(dx);
+        dy = abs(dy);
+        if (dx > dy) {
+            for (x = x1; x != x2; x += ux) {
+                OLED_SetPixel(x, y, color);
+                eps += dy;
+                if ((eps << 1) >= dx) {
+                    y += uy;
+                    eps -= dx;
+                }
+            }
+        } else {
+            for (y = y1; y != y2; y += uy) {
+                OLED_SetPixel(x, y, color);
+                eps += dx;
+                if ((eps << 1) >= dy) {
+                    x += ux;
+                    eps -= dy;
+                }
+            }
+        }
     }
 }
