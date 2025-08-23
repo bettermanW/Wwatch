@@ -172,3 +172,28 @@ uint8_t mod10(const uint8_t val)
 {
   return val % 10;
 }
+
+const char days[7][BUFFSIZE_STR_DAYS]  = {
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun"
+};
+
+const char months[12][BUFFSIZE_STR_MONTHS]  = {
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+};

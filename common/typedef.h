@@ -7,6 +7,9 @@
 #include "stdint.h"
 #include "stdbool.h"
 
+#define BUFFSIZE_STR_DAYS	4
+#define BUFFSIZE_STR_MONTHS	4
+
 #define FONT_SMALL2_WIDTH 11
 #define FONT_SMALL2_HEIGHT 16
 

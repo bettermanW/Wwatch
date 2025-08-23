@@ -29,6 +29,9 @@ extern const uint8_t battIconLow[];
 extern const uint8_t battIconHigh[];
 extern const uint8_t battIconFull[];
 
+extern const char days[7][BUFFSIZE_STR_DAYS];
+extern const char months[12][BUFFSIZE_STR_MONTHS];
+
 void drawBattery();
 
 
