@@ -39,8 +39,6 @@ enable_language(C ASM)
 add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
 
-        system/Inc/button.h
-        system/Src/button.c
         test/test_button.c)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
