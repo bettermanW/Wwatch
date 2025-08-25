@@ -15,7 +15,7 @@ typedef enum {
     BTN_2 = 1,
     BTN_3 = 2,
 
-    BTN_COUNT = 4 // 按钮数量
+    BTN_COUNT = 3 // 按钮数量
 }btn_t;
 
 
@@ -38,8 +38,8 @@ typedef struct {
 static s_button buttons[BTN_COUNT];
 
 // 按键消抖逻辑中的阈值（threshold）
-#define BTN_IS_PRESSED	1 // 认为按键真的按下去 所需的最少 1 的数量。
-#define BTN_NOT_PRESSED	1 // 认为按键真的松开 所需的最多 1 的数量。
+#define BTN_IS_PRESSED	2 // 认为按键真的按下去 所需的最少 1 的数量。
+#define BTN_NOT_PRESSED	2 // 认为按键真的松开 所需的最多 1 的数量。
 
 
 void buttons_update(void);
