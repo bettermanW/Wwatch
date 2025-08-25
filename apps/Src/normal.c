@@ -7,10 +7,8 @@ static display_t draw();
 static display_t ticker();
 static void drawTickerNum(tickerData_t* data);
 
-uint8_t div10(uint8_t val);
-uint8_t mod10(uint8_t val);
-const char days[7][BUFFSIZE_STR_DAYS];
-const char months[12][BUFFSIZE_STR_MONTHS];
+
+
 
 extern timeDate_s timeDate; // 定义时间结构体
 // extern const uint8_t small2Font[][22];
@@ -34,6 +32,7 @@ static display_t draw()
     /*一、绘制日期*/
     drawDate();
     ticker();
+    drawBattery();
     // display_t busy = ticker();
     /*二、数字滚动动画*/
 
@@ -177,22 +176,3 @@ static void drawTickerNum(tickerData_t* data)
 
 
 
-/**
- * @brief 计算一个 8 位无符号整数 (val) 除以 10 的商
- * @param val 8 位无符号整数 (val)
- * @return val / 10的整数结果
- */
-uint8_t div10(const uint8_t val)
-{
-    return val / 10;
-}
-
-/**
- * @brief 计算一个 8 位无符号整数 (val) 除以10的余数
- * @param val 8 位无符号整数 (val)
- * @return val % 10的余数
- */
-uint8_t mod10(const uint8_t val)
-{
-    return val % 10;
-}

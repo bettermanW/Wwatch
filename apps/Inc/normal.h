@@ -8,6 +8,7 @@
 #include "display.h"
 #include "stdio.h"
 #include "time.h"
+#include "resourse.h"
 
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
