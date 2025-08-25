@@ -39,7 +39,9 @@ enable_language(C ASM)
 add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
 
-        test/test_button.c)
+        test/test_button.c
+        drivers_bsp/button_driver/button_driver.c
+        drivers_bsp/button_driver/button_driver.h)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -61,6 +63,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         test
         drivers_bsp/oled
         system/Inc
+        drivers_bsp/button_driver
 )
 
 # Add project symbols (macros)  添加编译宏定义
