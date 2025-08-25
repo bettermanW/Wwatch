@@ -52,6 +52,9 @@ typedef display_t (*draw_f)(void);
  */
 typedef void (*display_f)(void);
 
+
+/******************************日期数据结构***************************************/
+
 // 定义 12 个月份的索引（0-11），用于 date_s 结构中的 month 字段
 typedef enum
 {
@@ -118,4 +121,34 @@ typedef struct
 } tickerData_t;
 
 
+/***********************************菜单回调数据结构********************************************/
+// 函数指针类型，表示一个 **无参无返回值的菜单操作函数** 用来绑定按钮行为或者菜单切换
+typedef void (*menu_f)(void);
+// 用于 **加载菜单项**（比如显示对应项的内容）。
+typedef void (*itemLoader_f)(uint8_t);
+
+typedef enum
+{
+    MENU_TYPE_STR,  // 文字菜单（比如 "Alarm", "Settings"）
+    MENU_TYPE_ICON  // 图标菜单（比如 电池、时钟图标）
+} menu_type_t;  // 菜单枚举类型
+
+typedef struct{
+    menu_f btn1;     // 按钮1的处理函数 KEY1
+    menu_f btn2;     // 按钮2的处理函数 KEY2
+    menu_f btn3;     // 按钮3的处理函数 KEY0
+    draw_f draw;     // 绘制菜单界面的函数
+    itemLoader_f loader; // 菜单项加载函数
+} menuFuncs_t;  // 提供菜单的 **行为接口**（绘制、按键响应、加载内容）
+
+typedef struct{
+    uint8_t selected;           // 当前选中的菜单项索引
+    uint8_t scroll;             // 滚动偏移量（如果菜单项多于一屏）
+    uint8_t optionCount;        // 菜单项总数
+    bool isOpen;             // 菜单是否打开
+    const char* title;       // 菜单标题（例如 "Settings"）
+    menu_type_t menuType;    // 菜单类型（字符串/图标）
+    menuFuncs_t func;        // 绑定的功能函数集合
+    menu_f prevMenu;         // 上一级菜单（返回用）
+} menu_s;   // 保存菜单的 **状态**（光标、滚动、打开/关闭等）
 #endif //TYPEDEF_H

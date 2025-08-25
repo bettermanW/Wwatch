@@ -28,7 +28,7 @@
 #include <stdio.h>
 
   #include "test.h"
- #include "button.h"
+ #include "menu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,12 +104,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    char buff[20];
-    uint8_t cnt = test_bitcount();
-
-    sprintf(buff, "bitcount = %d\r\n", cnt);
-    HAL_UART_Transmit(&huart2, (uint8_t*)buff, 20, HAL_MAX_DELAY);
-    HAL_Delay(1000);
+    // char buff[20];
+    // uint8_t cnt = test_bitcount();
+    //
+    // sprintf(buff, "bitcount = %d\r\n", cnt);
+    // HAL_UART_Transmit(&huart2, (uint8_t*)buff, 20, HAL_MAX_DELAY);
+    // HAL_Delay(1000);
+    menu_test() ;
 
     /* USER CODE END WHILE */
 
