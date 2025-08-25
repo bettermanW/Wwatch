@@ -12,5 +12,6 @@
 // #define KEY0   HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12)  // 确认
 #define KEY1   HAL_GPIO_ReadPin(GPIOB, KEY1_Pin)  // 上
 #define KEY2   HAL_GPIO_ReadPin(GPIOB, KEY2_Pin)  // 下
+#define KNOB_KEY HAL_GPIO_ReadPin(GPIOB, KNOB_KEY_Pin) // 选择
 
 #endif //BUTTON_DRIVER_H
