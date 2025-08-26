@@ -6,6 +6,7 @@
 #define DRAW_H
 #include  "oled.h"
 #include "stdbool.h"
+#include "typedef.h"
 #include "ulti.h"
 
 #define CHARACTER_SET \
@@ -107,8 +108,7 @@
 {0x02,0x05,0x05,0x02,0x00},/* degrees (non-standard, normally DEL) */ \
 {0x60,0xC0,0xF0,0x38,0x1C},/* tick (non-standard) */ \
 
-#define SMALLFONT_WIDTH 5 // 字体宽度为 5 像素
-#define SMALLFONT_HEIGHT 8 // 字体高度为 8 像素
+
 
 void draw_init();
 void draw_end();
