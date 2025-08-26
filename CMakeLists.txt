@@ -40,7 +40,15 @@ add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/oled/oled.c
         apps/Inc/m_main.h
         apps/Src/m_main.c
-)
+
+        drivers_bsp/oled/oled.c
+
+        system/Inc/button.h
+        system/Src/button.c
+        test/test_button.c
+        drivers_bsp/button_driver/button_driver.c
+        drivers_bsp/button_driver/button_driver.h
+        common/ulti.h)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -61,6 +69,9 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # 编译器会在这个路径下查找 #include "xxx.h"。
         test
         drivers_bsp/oled
+        system/Inc
+        drivers_bsp/button_driver
+        common
         apps/Inc
 )
 
