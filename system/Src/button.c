@@ -110,7 +110,7 @@ static void processButtons() {
     bool isPressed[BTN_COUNT];
     isPressed[BTN_1] = KEY1;
     isPressed[BTN_2] = KEY2;
-    // isPressed[BTN_3] = KEY0;
+    isPressed[BTN_3] = KNOB_KEY;
 
 
     // Process each button // 每个按键分别处理（注意取反逻辑）
