@@ -7,6 +7,8 @@
 #include "stdint.h"
 #include "stdbool.h"
 
+#define BUFFSIZE_STR_MENU   24 // 文本菜单24字节，包含23个字符+1个空终止符
+
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
 #define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)
@@ -151,4 +153,28 @@ typedef struct{
     menuFuncs_t func;        // 绑定的功能函数集合
     menu_f prevMenu;         // 上一级菜单（返回用）
 } menu_s;   // 保存菜单的 **状态**（光标、滚动、打开/关闭等）
+
+/*管理菜单系统的操作和绘制逻辑*/
+
+typedef enum
+{
+    OPERATION_DRAWICON, // 绘制图标（例如菜单项的图形表示）
+    OPERATION_DRAWNAME_ICON, // 绘制当前选中菜单项的名称（通常在图标菜单中显示）。
+    OPERATION_DRAWNAME_STR, // 绘制字符串形式的菜单项（用于字符串类型的菜单）
+    OPERATION_ACTION    // 执行某个动作（例如触发菜单项的功能）
+} operation_t; // 菜单系统中可能执行的四种操作类型
+
+typedef struct
+{
+    uint8_t data;   // 存储与操作相关的附加数据
+    operation_t op;    // 指定操作的类型
+    uint8_t id;     // 标识菜单项的索引
+} operation_s; // 量级的数据结构，用于封装单个菜单操作的详细信息，充当操作任务的“描述符”
+
+/**/
+typedef struct{
+    uint8_t lastSelected; // 上一次选中的菜单项序号（索引值，比如0、1、2…）
+    menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
+} prev_menu_s;
+
 #endif //TYPEDEF_H
