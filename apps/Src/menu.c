@@ -282,15 +282,15 @@ bool exitSelected()
 
 /**
  * @brief 进入一个子菜单时，设置 prevMenu 结构以便返回时能恢复上一级选择状态,并把 menuData.prevMenu 指向新的“返回到上级菜单”的函数 newPrevMenu。
- * @param prevMenu
- * @param newPrevMenu
+ * @param prevMenu 上一级菜单状态结构体
+ * @param newPrevMenu 当前子菜单退出时要调用的函数（返回上一级菜单）
  */
 void setPrevMenuOpen(prev_menu_s* prevMenu, const menu_f newPrevMenu)
 {
-    if(menuData.prevMenu != newPrevMenu) // Make sure new and old menu funcs are not the same, otherwise we get stuck in a menu loop
-        prevMenu->last = menuData.prevMenu; // Save previous menu open func
-    menuData.selected = prevMenu->lastSelected; //
-    menuData.prevMenu = newPrevMenu; // Set new menu open func
+    if(menuData.prevMenu != newPrevMenu)
+        prevMenu->last = menuData.prevMenu; // 保存上一级菜单的打开函数
+    menuData.selected = prevMenu->lastSelected; // 恢复上一级菜单选中项
+    menuData.prevMenu = newPrevMenu; // 设置当前菜单返回时调用的函数
 }
 
 /**
@@ -299,12 +299,12 @@ void setPrevMenuOpen(prev_menu_s* prevMenu, const menu_f newPrevMenu)
  */
 void setPrevMenuExit(prev_menu_s* prevMenu)
 {
-    if(!exitSelected()) // Opened new menu, save selected item
-        prevMenu->lastSelected = menuData.selected;
+    if(!exitSelected()) // 如果当前选中不是 Back
+        prevMenu->lastSelected = menuData.selected; // 保存选中的菜单项索引
     else
     {
-        prevMenu->lastSelected = 0; // Reset selected item
-        menuData.prevMenu = prevMenu->last; //
+        prevMenu->lastSelected = 0; // 重置选中索引
+        menuData.prevMenu = prevMenu->last; // 恢复上一级菜单的打开函数
     }
 }
 
@@ -317,18 +317,35 @@ static void clear()
 }
 
 /**
- * @brief ：关闭菜单，清理回调，重置 isOpen 和 prevMenu，并调用 display_load()（通常用于加载表盘/默认显示）
+ * @brief 给当前菜单的 最后一项 添加一个固定的“返回/退出”选项。
+ */
+void addBackOption()
+{
+    setMenuOption(menuData.optionCount - 1, menuBack, menu_exit, back);
+}
+
+/**
+ * @brief ：清理菜单回调函数，避免悬挂函数指针或意外调用
  */
 void menu_close()
 {
-    clear();
-    menuData.isOpen = false;
-    menuData.prevMenu = NULL;
-    display_load(); // Move somewhere else, sometimes we don't want to load the watch face when closing the menu
+    clear();    // 清理菜单回调函数，避免悬挂函数指针或意外调用
+    menuData.isOpen = false; //  标记菜单已关闭
+    menuData.prevMenu = NULL;   // 清空“返回上一级菜单”的记录，防止回退时误调用
+    display_load(); // 关闭菜单后恢复显示（通常是表盘或者默认界面）
 }
 
+/**
+ * @brief 菜单的 返回功能，结合 prev_menu_s 可以实现从子菜单返回上级菜单，同时保持光标位置。
+ */
 void back()
 {
+    /*
+    判断 menuData.prevMenu 是否存在（即是否有上一级菜单记录）：
+    如果存在 → 调用 prevMenu()，返回上一级菜单。
+    如果不存在 → 调用 mMainOpen()，回到主菜单。
+    注意代码里最后 又调用了一次 mMainOpen()，这是作者的保险写法，确保返回后至少打开主菜单。
+     */
     menuData.prevMenu != NULL ? menuData.prevMenu() : mMainOpen();
     mMainOpen();
 }
@@ -374,7 +391,10 @@ void setMenuFuncs(const menu_f btn1Func, const menu_f btn2Func, const menu_f btn
     menuData.func.loader = loader;   // 设置菜单项加载函数
 }
 
-
+/**
+ * @brief 执行当前选中的菜单项动作
+ * @param anim 是否带动画
+ */
 void doAction(bool anim)
 {
     loader(OPERATION_ACTION, menuData.selected, anim);
