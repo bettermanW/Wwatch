@@ -24,7 +24,20 @@
 #include <stddef.h>
 bool menu_isOpen(void);
 bool menu_select(void);
-void test_menu_draw(void);
 display_t menu_draw();
-void menu_setup_and_open(void);
+
+
+bool menu_down(void);
+bool menu_up(void);
+void menu_close(void);
+
+display_t menu_draw();
+void setMenuInfo(const uint8_t optionCount, const menu_type_t menuType, const char* title);
+void setMenuFuncs(const menu_f btn1Func, const menu_f btn2Func, const menu_f btn3Func, const itemLoader_f loader);
+void setPrevMenuOpen(prev_menu_s* prevMenu, const menu_f newPrevMenu);
+void setPrevMenuExit(prev_menu_s* prevMenu);
+void doAction(bool anim);
+void setMenuOption(const uint8_t num, const char* name, const uint8_t* icon, const menu_f actionFunc);
+void nextOption();
+void prevOption();
 #endif //MENU_H
