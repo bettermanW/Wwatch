@@ -32,6 +32,10 @@ extern const uint8_t battIconFull[];
 extern const char days[7][BUFFSIZE_STR_DAYS];
 extern const char months[12][BUFFSIZE_STR_MONTHS];
 
+extern const uint8_t selectbar_bottom[];
+extern const uint8_t selectbar_top[];
+extern const uint8_t menu_default[];
+
 void drawBattery();
 
 
