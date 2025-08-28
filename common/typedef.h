@@ -173,7 +173,8 @@ typedef struct
 
 /**/
 typedef struct{
-    uint8_t lastSelected;
-    menu_f last;
-}prev_menu_s;
+    uint8_t lastSelected; // 上一次选中的菜单项序号（索引值，比如0、1、2…）
+    menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
+} prev_menu_s;
+
 #endif //TYPEDEF_H
