@@ -177,4 +177,16 @@ typedef struct{
     menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
 } prev_menu_s;
 
+/* MENU SETTINGS */
+#define STR_SETTINGSMENU	"< SETTINGS >" //主菜单标题，用于显示菜单界面顶部，"< >" 表示这是一个菜单界面
+/*菜单选项*/
+#define STR_TIMEDATE	"Time & date" //
+#define STR_SLEEP		"Sleep" //
+#define STR_SOUND		"Sound" //
+#define STR_DISPLAY		"Display"   //
+#define STR_DIAGNOSTICS	"Diagnostics"   // 诊断功能，查看设备状态、传感器或故障信息
+
+#define STR_BACK		"Back"  // 返回上一级菜单，约定通常放在最后一项
+#define STR_EXIT		"Exit"  // 退出菜单或应用
+
 #endif //TYPEDEF_H
