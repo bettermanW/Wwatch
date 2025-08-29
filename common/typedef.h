@@ -194,14 +194,22 @@ typedef struct{
 /* MENU SETTINGS */
 #define STR_MAINMENU	"< MAIN MENU >"
 #define STR_SETTINGSMENU	"< SETTINGS >" //主菜单标题，用于显示菜单界面顶部，"< >" 表示这是一个菜单界面
-/*菜单选项*/
+
+/*主菜单文本选项*/
+#define STR_ALARMS		"Alarms"
+#define STR_FLASHLIGHT	"Flashlight"
+#define STR_STOPWATCH	"Stopwatch"
+#define STR_TUNEMAKER	"Tune maker"
+#define STR_GAMES		"Games"
+
+
 #define STR_TIMEDATE	"Time & date" //
 #define STR_SLEEP		"Sleep" //
 #define STR_SOUND		"Sound" //
 #define STR_DISPLAY		"Display"   //
 #define STR_DIAGNOSTICS	"Diagnostics"   // 诊断功能，查看设备状态、传感器或故障信息
 #define STR_SETTINGS	"Settings"
-#define STR_ALARMS		"Alarms"
+
 
 #define STR_BACK		"Back"  // 返回上一级菜单，约定通常放在最后一项
 #define STR_EXIT		"Exit"  // 退出菜单或应用
