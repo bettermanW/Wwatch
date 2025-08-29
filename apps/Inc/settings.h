@@ -5,6 +5,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 #include "menu.h"
-
+void mSettingsOpen();
 
 #endif //SETTINGS_H

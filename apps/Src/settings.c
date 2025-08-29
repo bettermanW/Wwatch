@@ -48,7 +48,7 @@ static void itemLoader()
     setMenuOption(0, STR_TIMEDATE, menu_timedate, mTimeDateOpen);
     setMenuOption(1, STR_SLEEP, menu_sleep, mSleepOpen);    //这里有bug！！！  可以再增加一个图标就可以解决
     setMenuOption(2, STR_SOUND, menu_sound, mSoundOpen);
-    setMenuOption(3, STR_DISPLAY menu_display, mDisplayOpen);
+    setMenuOption(3, STR_DISPLAY, menu_display, mDisplayOpen);
     setMenuOption(4, STR_DIAGNOSTICS, menu_diagnostic, mDiagOpen);
 
 
