@@ -40,7 +40,7 @@ static uint8_t getItemCount()
 void mMainOpen() {
     // 设置按键响应：此时只有“确认键”有效
     // 启动动画，动画完成后会调用
-    buttons_setFuncs(NULL, menu_select, NULL);
+    buttons_setFuncs(NULL, NULL, menu_select);
     mOpen();
 }
 
@@ -55,7 +55,7 @@ static void mOpen()
 
     setMenuInfo(OPTION_COUNT, MENU_TYPE_ICON, (STR_MAINMENU));
 
-    setMenuFuncs(nextOption, mSelect, prevOption, itemLoader);
+    setMenuFuncs(nextOption, prevOption,mSelect,  itemLoader);
 
     // 保存当前菜单状态到 `prevMenuData`，方便后续退出返回
     setPrevMenuOpen(&prevMenuData, mOpen);

@@ -6,5 +6,6 @@
 #define M_MAIN_H
 #include "button.h"
 #include "menu.h"
+#include "settings.h"
 void mMainOpen();
 #endif //M_MAIN_H
