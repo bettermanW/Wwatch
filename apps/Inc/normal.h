@@ -11,6 +11,7 @@
 #include "resourse.h"
 #include "menu.h"
 #include "button.h"
+#include "watchface.h"
 
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
