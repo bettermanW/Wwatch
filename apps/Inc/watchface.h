@@ -7,6 +7,8 @@
 
 #include "stdint.h"
 #include "display.h"
+#include "button.h"
+#include "normal.h"
 
 // 显存
 

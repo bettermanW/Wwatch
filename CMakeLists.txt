@@ -39,36 +39,33 @@ enable_language(C ASM)
 add_executable(${CMAKE_PROJECT_NAME}
         test/test.c
         test/test_ulti.c
-
         system/Inc/draw.h
         system/src/draw.c
-        system/Inc/button.h
-        system/Src/button.c
-        system/src/display.c
-        system/Inc/display.h
-
         common/ulti.h
         common/typedef.h
         common/resourse.c
         common/resourse.h
-
+        common/config.h
+        apps/Inc/m_main.h
         apps/Inc/menu.h
+        apps/Inc/normal.h
+        apps/Inc/settings.h
+        apps/Inc/watchface.h
+        apps/Src/m_main.c
         apps/Src/menu.c
-
-        drivers_bsp/oled/oled.c
+        apps/Src/normal.c
+        apps/Src/settings.c
+        apps/Src/watchface.c
         drivers_bsp/button_driver/button_driver.c
         drivers_bsp/button_driver/button_driver.h
-        apps/Inc/m_main.h
-        apps/Src/m_main.c
-
-        apps/Inc/settings.h
-        apps/Src/settings.c
-        common/config.h
-        apps/Inc/watchface.h
-        apps/Src/watchface.c
-        apps/Inc/normal.h
-        apps/Src/normal.c
-)
+        drivers_bsp/oled/oled.c
+        drivers_bsp/oled/oled.h
+        drivers_bsp/time/kk_time.c
+        drivers_bsp/time/kk_time.h
+        system/Inc/button.h
+        system/Inc/display.h
+        system/src/button.c
+        system/src/display.c)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -88,11 +85,12 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     # 编译器会在这个路径下查找 #include "xxx.h"。
         test
+        drivers_bsp/oled
+        drivers_bsp/button_driver
+        drivers_bsp/time
+        system/Inc
         common
         apps/Inc
-        drivers_bsp/oled
-        system/Inc
-        drivers_bsp/button_driver
 )
 
 # Add project symbols (macros)  添加编译宏定义
