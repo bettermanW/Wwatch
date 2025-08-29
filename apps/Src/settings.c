@@ -45,11 +45,11 @@ static void mSelect()
 static void itemLoader()
 {
     // 设置每一个菜单项
-    setMenuOption(0, STR_TIMEDATE, menu_timedate, mTimeDateOpen);
-    setMenuOption(1, STR_SLEEP, menu_sleep, mSleepOpen);    //这里有bug！！！  可以再增加一个图标就可以解决
-    setMenuOption(2, STR_SOUND, menu_sound, mSoundOpen);
-    setMenuOption(3, STR_DISPLAY, menu_display, mDisplayOpen);
-    setMenuOption(4, STR_DIAGNOSTICS, menu_diagnostic, mDiagOpen);
+    setMenuOption(0, STR_TIMEDATE, menu_timedate, NULL);
+    setMenuOption(1, STR_SLEEP, menu_sleep, NULL);    //这里有bug！！！  可以再增加一个图标就可以解决
+    setMenuOption(2, STR_SOUND, menu_sound, NULL);
+    setMenuOption(3, STR_DISPLAY, menu_display, NULL);
+    setMenuOption(4, STR_DIAGNOSTICS, menu_diagnostic, NULL);
 
 
     // 动加一个 **返回 (Back)** 菜单项，让用户能回到上级菜单
