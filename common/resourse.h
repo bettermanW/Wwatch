@@ -45,5 +45,7 @@ extern const uint8_t menu_display[];
 extern const uint8_t menu_diagnostic[];
 extern const uint8_t menu_rotate[];
 extern const uint8_t menu_exit[];
+extern const uint8_t menu_settings[];
+extern const uint8_t menu_alarm[];
 
 #endif //RESOURSE_H
