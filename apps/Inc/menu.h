@@ -40,4 +40,6 @@ void doAction(bool anim);
 void setMenuOption(const uint8_t num, const char* name, const uint8_t* icon, const menu_f actionFunc);
 void nextOption();
 void prevOption();
+void back();
+void addBackOption();
 #endif //MENU_H

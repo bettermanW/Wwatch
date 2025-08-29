@@ -38,5 +38,12 @@ extern const uint8_t menu_default[];
 
 void drawBattery();
 
+extern const uint8_t menu_timedate[];
+extern const uint8_t menu_sleep[];
+extern const uint8_t menu_sound[];
+extern const uint8_t menu_display[];
+extern const uint8_t menu_diagnostic[];
+extern const uint8_t menu_rotate[];
+extern const uint8_t menu_exit[];
 
 #endif //RESOURSE_H
