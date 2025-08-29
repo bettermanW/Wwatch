@@ -255,6 +255,24 @@ static void __SysTick(void) {
     if (iAng1 == 180) iAng1 = 0;
 }
 
+static bool down()
+{
+    // Set watchface
+    display_set(watchface_normal);
+    display_load();
+
+    return true;
+}
+
+static bool up()
+{
+    // Set watchface
+    display_set(watchface_normal);
+    display_load();
+
+    return true;
+}
+
 /**
  * @brief 手表主界面初始入口
  * @return
@@ -267,6 +285,6 @@ display_f watchfaceOpen(void) {
     display_setDrawFunc(draw);
     //draw();
     // 设置当前界面的按钮响应函数；
-    //buttons_setFuncs(up, menu_select, down);
+    buttons_setFuncs(up, down, menu_select);
     return DISPLAY_DONE;
 }
