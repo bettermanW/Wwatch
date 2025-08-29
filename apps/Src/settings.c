@@ -24,7 +24,7 @@ void mSettingsOpen()
 {
     setMenuInfo(OPTION_COUNT, MENU_TYPE_ICON, STR_SETTINGSMENU);
     // 设置菜单的行为函数
-    setMenuFuncs(nextOption, prevOption, mSelect,. itemLoader);
+    setMenuFuncs(nextOption, prevOption, mSelect, itemLoader);
     // 把当前菜单保存到, 供返回上级菜单时使用
     setPrevMenuOpen(&prevMenuData, mSettingsOpen);
 
