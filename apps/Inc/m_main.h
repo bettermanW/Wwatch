@@ -7,5 +7,7 @@
 #include "button.h"
 #include "menu.h"
 #include "settings.h"
+#include "typedef.h"
+#include "config.h"
 void mMainOpen();
 #endif //M_MAIN_H

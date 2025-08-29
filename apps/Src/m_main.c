@@ -81,21 +81,21 @@ static void mSelect()
 static void itemLoader(uint8_t num)
 {
     num = 0;
-    setMenuOption(num++, STR_ALARMS, menu_alarm, mAlarmsOpen);
+    setMenuOption(num++, STR_ALARMS, menu_alarm, NULL);
 #if COMPILE_TORCH
-    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, torch_open);
+    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, NULL);
 #endif
 #if COMPILE_STOPWATCH
-    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, stopwatch_open);
+    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, NULL);
 #endif
 #if COMPILE_BTRCCAR
     setMenuOption(num++, (STR_BTRCCAR), menu_stopwatch, btrccar_open);
 #endif
 #if COMPILE_TUNEMAKER
-    setMenuOption(num++, (STR_TUNEMAKER), menu_tunemaker, tunemakerOpen);
+    setMenuOption(num++, (STR_TUNEMAKER), menu_tunemaker, NULL);
 #endif
 #if COMPILE_GAME1 || COMPILE_GAME2 || COMPILE_GAME3
-    setMenuOption(num++, (STR_GAMES), menu_games, mGamesOpen);
+    setMenuOption(num++, (STR_GAMES), menu_games, NULL);
 #endif
 
     setMenuOption(num++, (STR_SETTINGS), menu_settings, mSettingsOpen);
