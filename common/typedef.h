@@ -154,7 +154,7 @@ typedef struct{
     menu_f prevMenu;         // 上一级菜单（返回用）
 } menu_s;   // 保存菜单的 **状态**（光标、滚动、打开/关闭等）
 
-/*管理菜单系统的操作和绘制逻辑*/
+/************************************管理菜单系统的操作和绘制逻辑*****************************/
 
 typedef enum
 {
@@ -177,6 +177,20 @@ typedef struct{
     menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
 } prev_menu_s;
 
+/***********************************应用程序配置参数**************************/
+typedef struct{
+    bool showFPS; // 是否显示FPS信息
+    uint8_t sleepTimeout; // 控制设备进入睡眠模式的超时时间
+    bool CTRL_LEDs ;// 是否启用LED灯效果
+    bool display180; // 显示屏是否反转180
+    bool invent; // 设置颜色反转
+    #if COMPILE_ANIMATIONS
+        bool animation;
+    #endif
+}appconfig_s;
+
+
+/***********************************菜单文本书籍******************************/
 /* MENU SETTINGS */
 #define STR_MAINMENU	"< MAIN MENU >"
 #define STR_SETTINGSMENU	"< SETTINGS >" //主菜单标题，用于显示菜单界面顶部，"< >" 表示这是一个菜单界面
