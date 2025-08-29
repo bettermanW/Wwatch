@@ -7,6 +7,8 @@
 #include "stdint.h"
 #include "stdbool.h"
 
+#define BUFFSIZE_STR_MENU   24 // 文本菜单24字节，包含23个字符+1个空终止符
+
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
 #define BUFFSIZE_DATE_FORMAT		((BUFFSIZE_STR_DAYS - 1) + (BUFFSIZE_STR_MONTHS - 1) + 12)
@@ -51,6 +53,9 @@ typedef display_t (*draw_f)(void);
  * 通常用于单次执行的静态显示功能，不需要状态反馈。
  */
 typedef void (*display_f)(void);
+
+
+/******************************日期数据结构***************************************/
 
 // 定义 12 个月份的索引（0-11），用于 date_s 结构中的 month 字段
 typedef enum
@@ -117,5 +122,96 @@ typedef struct
     bool moving;    // 是否正在滚动
 } tickerData_t;
 
+
+/***********************************菜单回调数据结构********************************************/
+// 函数指针类型，表示一个 **无参无返回值的菜单操作函数** 用来绑定按钮行为或者菜单切换
+typedef void (*menu_f)(void);
+// 用于 **加载菜单项**（比如显示对应项的内容）。
+typedef void (*itemLoader_f)(uint8_t);
+
+typedef enum
+{
+    MENU_TYPE_STR,  // 文字菜单（比如 "Alarm", "Settings"）
+    MENU_TYPE_ICON  // 图标菜单（比如 电池、时钟图标）
+} menu_type_t;  // 菜单枚举类型
+
+typedef struct{
+    menu_f btn1;     // 按钮1的处理函数 KEY1
+    menu_f btn2;     // 按钮2的处理函数 KEY2
+    menu_f btn3;     // 按钮3的处理函数 KEY0
+    draw_f draw;     // 绘制菜单界面的函数
+    itemLoader_f loader; // 菜单项加载函数
+} menuFuncs_t;  // 提供菜单的 **行为接口**（绘制、按键响应、加载内容）
+
+typedef struct{
+    uint8_t selected;           // 当前选中的菜单项索引
+    uint8_t scroll;             // 滚动偏移量（如果菜单项多于一屏）
+    uint8_t optionCount;        // 菜单项总数
+    bool isOpen;             // 菜单是否打开
+    const char* title;       // 菜单标题（例如 "Settings"）
+    menu_type_t menuType;    // 菜单类型（字符串/图标）
+    menuFuncs_t func;        // 绑定的功能函数集合
+    menu_f prevMenu;         // 上一级菜单（返回用）
+} menu_s;   // 保存菜单的 **状态**（光标、滚动、打开/关闭等）
+
+/************************************管理菜单系统的操作和绘制逻辑*****************************/
+
+typedef enum
+{
+    OPERATION_DRAWICON, // 绘制图标（例如菜单项的图形表示）
+    OPERATION_DRAWNAME_ICON, // 绘制当前选中菜单项的名称（通常在图标菜单中显示）。
+    OPERATION_DRAWNAME_STR, // 绘制字符串形式的菜单项（用于字符串类型的菜单）
+    OPERATION_ACTION    // 执行某个动作（例如触发菜单项的功能）
+} operation_t; // 菜单系统中可能执行的四种操作类型
+
+typedef struct
+{
+    uint8_t data;   // 存储与操作相关的附加数据
+    operation_t op;    // 指定操作的类型
+    uint8_t id;     // 标识菜单项的索引
+} operation_s; // 量级的数据结构，用于封装单个菜单操作的详细信息，充当操作任务的“描述符”
+
+/**/
+typedef struct{
+    uint8_t lastSelected; // 上一次选中的菜单项序号（索引值，比如0、1、2…）
+    menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
+} prev_menu_s;
+
+/***********************************应用程序配置参数**************************/
+typedef struct{
+    bool showFPS; // 是否显示FPS信息
+    uint8_t sleepTimeout; // 控制设备进入睡眠模式的超时时间
+    bool CTRL_LEDs ;// 是否启用LED灯效果
+    bool display180; // 显示屏是否反转180
+    bool invent; // 设置颜色反转
+    #if COMPILE_ANIMATIONS
+        bool animation;
+    #endif
+}appconfig_s;
+
+
+/***********************************菜单文本书籍******************************/
+/* MENU SETTINGS */
+#define STR_MAINMENU	"< MAIN MENU >"
+#define STR_SETTINGSMENU	"< SETTINGS >" //主菜单标题，用于显示菜单界面顶部，"< >" 表示这是一个菜单界面
+
+/*主菜单文本选项*/
+#define STR_ALARMS		"Alarms"
+#define STR_FLASHLIGHT	"Flashlight"
+#define STR_STOPWATCH	"Stopwatch"
+#define STR_TUNEMAKER	"Tune maker"
+#define STR_GAMES		"Games"
+
+
+#define STR_TIMEDATE	"Time & date" //
+#define STR_SLEEP		"Sleep" //
+#define STR_SOUND		"Sound" //
+#define STR_DISPLAY		"Display"   //
+#define STR_DIAGNOSTICS	"Diagnostics"   // 诊断功能，查看设备状态、传感器或故障信息
+#define STR_SETTINGS	"Settings"
+
+
+#define STR_BACK		"Back"  // 返回上一级菜单，约定通常放在最后一项
+#define STR_EXIT		"Exit"  // 退出菜单或应用
 
 #endif //TYPEDEF_H
