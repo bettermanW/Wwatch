@@ -45,7 +45,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         common/ulti.h
         common/typedef.h
         common/resourse.c
-        common/resourse.h)
+        common/resourse.h
+        common/config.h)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
