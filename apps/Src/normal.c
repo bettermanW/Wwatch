@@ -17,9 +17,32 @@ extern timeDate_s timeDate; // 定义时间结构体
 uint32_t milliseconds;
 
 
+
+
+static bool down()
+{
+    // Set watchface切换到 `watchfaceOpen` 这个显示逻辑
+    display_set(watchfaceOpen);
+    display_load();
+
+    return true;
+}
+
+static bool up()
+{
+    // Set watchface切换到 `watchfaceOpen` 这个显示逻辑
+    display_set(watchfaceOpen);
+    display_load();
+
+    return true;
+}
+
 void watchface_normal()
 {
+    // 当前界面绘制函数， 指定这个界面的绘制逻辑
     display_setDrawFunc(draw);
+    // 绑定按键处理函数。
+    buttons_setFuncs(up, down, menu_select);
 }
 
 /**

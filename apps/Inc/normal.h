@@ -9,6 +9,8 @@
 #include "stdio.h"
 #include "time.h"
 #include "resourse.h"
+#include "menu.h"
+#include "button.h"
 
 #define BUFFSIZE_STR_DAYS	4
 #define BUFFSIZE_STR_MONTHS	4
