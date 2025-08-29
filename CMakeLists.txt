@@ -64,6 +64,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Inc/settings.h
         apps/Src/settings.c
         common/config.h
+        apps/Inc/watchface.h
+        apps/Src/watchface.c
+        apps/Inc/normal.h
+        apps/Src/normal.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
