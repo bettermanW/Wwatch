@@ -321,7 +321,7 @@ static void clear()
  */
 void addBackOption()
 {
-    setMenuOption(menuData.optionCount - 1, menuBack, menu_exit, back);
+    setMenuOption(menuData.optionCount - 1, STR_BACK, menu_exit, back);
 }
 
 /**
