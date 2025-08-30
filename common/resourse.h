@@ -38,12 +38,24 @@ extern const uint8_t menu_default[];
 
 void drawBattery();
 
+/*m_main*/
+extern const uint8_t menu_alarm[];
+extern const uint8_t menu_torch[];
+extern const uint8_t menu_stopwatch[];
+extern const uint8_t menu_tunemaker[];
+extern const uint8_t menu_games[];
+extern const uint8_t menu_settings[];
+extern const uint8_t menu_exit[];
+
+/* settings 界面*/
 extern const uint8_t menu_timedate[];
 extern const uint8_t menu_sleep[];
 extern const uint8_t menu_sound[];
 extern const uint8_t menu_display[];
 extern const uint8_t menu_diagnostic[];
 extern const uint8_t menu_rotate[];
-extern const uint8_t menu_exit[];
+
+
+
 
 #endif //RESOURSE_H

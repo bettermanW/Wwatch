@@ -154,7 +154,7 @@ typedef struct{
     menu_f prevMenu;         // 上一级菜单（返回用）
 } menu_s;   // 保存菜单的 **状态**（光标、滚动、打开/关闭等）
 
-/*管理菜单系统的操作和绘制逻辑*/
+/************************************管理菜单系统的操作和绘制逻辑*****************************/
 
 typedef enum
 {
@@ -177,14 +177,75 @@ typedef struct{
     menu_f last;          // 上一次所在的菜单函数（即菜单入口函数指针）
 } prev_menu_s;
 
+/***********************************应用程序配置参数**************************/
+typedef struct{
+    bool showFPS; // 是否显示FPS信息
+    uint8_t sleepTimeout; // 控制设备进入睡眠模式的超时时间
+    bool CTRL_LEDs ;// 是否启用LED灯效果
+    bool display180; // 显示屏是否反转180
+    bool invent; // 设置颜色反转
+    #if COMPILE_ANIMATIONS
+        bool animation;
+    #endif
+}appconfig_s;
+
+/***********************************蜂鸣器频率、类型、优先级******************************/
+
+// 枚举类型
+// TONE_VALUE = F_CPU / TONE_FREQ / 16
+/*主频是1Mhz进行了重新计算*/
+typedef enum {
+    TONE_STOP   = 0,       // 停止发声
+    TONE_PAUSE  = 1,       // 静音/暂停
+    TONE_REPEAT = 2,       // 循环播放
+    TONE_2KHZ   = 2000,    // 2 kHz
+    TONE_2_5KHZ = 2500,    // 2.5 kHz
+    TONE_3KHZ   = 3000,    // 3 kHz
+    TONE_3_5KHZ = 3500,    // 3.5 kHz
+    TONE_4KHZ   = 4000,    // 4 kHz
+    TONE_4_5KHZ = 4500,    // 4.5 kHz
+    TONE_5KHZ   = 5000     // 5 kHz
+} tone_t;
+
+/*蜂鸣器响的什么“目的”或“上下文”*/
+typedef enum {
+    VOL_OTHER = 0, // 其他用途
+    VOL_UI = 1, // 用于UI界面反馈音
+    VOL_ALARM = 2, // 用于警报音
+    VOL_HOUR = 3 // 用于整点报时
+} vol_t;
+
+/*表示蜂鸣器响声的“优先级”*/
+typedef enum {
+    PRIO_MIN = 0, // 最低优先级（几乎被任何声音覆盖）
+    PRIO_LOW = 1, // 低优先级（例如提示音）
+    PRIO_NML = 2, // 普通优先级（默认情况）
+    PRIO_HIGH = 3, // 高优先级
+    PRIO_MAX = 255 // 最高优先级（不可被打断）
+} tonePrio_t;
+
+/**/
+
+/***********************************菜单文本书籍******************************/
 /* MENU SETTINGS */
+#define STR_MAINMENU	"< MAIN MENU >"
 #define STR_SETTINGSMENU	"< SETTINGS >" //主菜单标题，用于显示菜单界面顶部，"< >" 表示这是一个菜单界面
-/*菜单选项*/
+
+/*主菜单文本选项*/
+#define STR_ALARMS		"Alarms"
+#define STR_FLASHLIGHT	"Flashlight"
+#define STR_STOPWATCH	"Stopwatch"
+#define STR_TUNEMAKER	"Tune maker"
+#define STR_GAMES		"Games"
+
+
 #define STR_TIMEDATE	"Time & date" //
 #define STR_SLEEP		"Sleep" //
 #define STR_SOUND		"Sound" //
 #define STR_DISPLAY		"Display"   //
 #define STR_DIAGNOSTICS	"Diagnostics"   // 诊断功能，查看设备状态、传感器或故障信息
+#define STR_SETTINGS	"Settings"
+
 
 #define STR_BACK		"Back"  // 返回上一级菜单，约定通常放在最后一项
 #define STR_EXIT		"Exit"  // 退出菜单或应用
