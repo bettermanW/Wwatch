@@ -238,6 +238,8 @@ typedef enum {
 #define STR_TUNEMAKER	"Tune maker"
 #define STR_GAMES		"Games"
 
+#define STR_SLEEPMENU	"< SLEEP >"
+#define STR_TIMEOUT		"Timeout"
 
 #define STR_TIMEDATE	"Time & date" //
 #define STR_SLEEP		"Sleep" //

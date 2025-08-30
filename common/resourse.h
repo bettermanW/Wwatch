@@ -55,6 +55,7 @@ extern const uint8_t menu_display[];
 extern const uint8_t menu_diagnostic[];
 extern const uint8_t menu_rotate[];
 
+extern const uint8_t menu_sleeptimeout[];
 
 
 
