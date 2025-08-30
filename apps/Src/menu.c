@@ -33,7 +33,7 @@ bool menu_select()
     {
         menuData.isOpen = true; // 设置菜单状态为 已打开
         // 调用菜单主界面的初始化函数，绘制初始界面
-        // mMainOpen();
+        mMainOpen();
 
         char buf[64];
         int len = sprintf(buf, "菜单 [%s] 已打开\r\n", menuData.title);
