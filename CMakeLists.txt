@@ -73,6 +73,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         system/Src/tiem_sys.c
         apps/Inc/games.h
         apps/Src/games.c
+        apps/Inc/sleep.h
+        apps/Src/sleep.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
