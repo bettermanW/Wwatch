@@ -7,6 +7,7 @@
 #include "config.h"
 #include "stdbool.h"
 #include "menu.h"
+#include "time_sys.h"
 #if COMPILE_STOPWATCH
 
 void stopwatch_open(void);

@@ -6,4 +6,6 @@
 #define TIME_SYS_H
 #include "typedef.h"
 #include <stdio.h>
+
+char* time_timeStr();
 #endif //TIME_SYS_H

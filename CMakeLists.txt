@@ -61,6 +61,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Inc/stopwatch.h
         apps/Src/stopwatch.c
         common/config.h
+        system/Inc/time_sys.h
+        system/Src/tiem_sys.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
@@ -86,6 +88,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         drivers_bsp/oled
         system/Inc
         drivers_bsp/button_driver
+        drivers_bsp/time
 )
 
 # Add project symbols (macros)  添加编译宏定义
