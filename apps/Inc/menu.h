@@ -42,4 +42,5 @@ void nextOption();
 void prevOption();
 void back();
 void addBackOption();
+bool exitSelected();
 #endif //MENU_H
