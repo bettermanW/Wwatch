@@ -60,6 +60,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/button_driver/button_driver.h
         apps/Inc/stopwatch.h
         apps/Src/stopwatch.c
+        common/config.h
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
