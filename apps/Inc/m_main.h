@@ -9,5 +9,7 @@
 #include "settings.h"
 #include "typedef.h"
 #include "config.h"
+#include "torch.h"
+#include "stopwatch.h"
 void mMainOpen();
 #endif //M_MAIN_H

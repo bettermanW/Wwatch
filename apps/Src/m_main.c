@@ -83,10 +83,10 @@ static void itemLoader(uint8_t num)
     num = 0;
     setMenuOption(num++, STR_ALARMS, menu_alarm, NULL);
 #if COMPILE_TORCH
-    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, NULL);
+    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, torch_open);
 #endif
 #if COMPILE_STOPWATCH
-    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, NULL);
+    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, stopwatch_open);
 #endif
 #if COMPILE_BTRCCAR
     setMenuOption(num++, (STR_BTRCCAR), menu_stopwatch, btrccar_open);

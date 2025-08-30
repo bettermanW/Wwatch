@@ -66,7 +66,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         system/Inc/display.h
         system/src/button.c
         system/src/display.c
-        apps/Src/stopwatch.c)
+        apps/Src/stopwatch.c
+        apps/Inc/torch.h
+        apps/Src/torch.c)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
