@@ -81,6 +81,7 @@ static bool btnStartStop()
 static bool btnExit()
 {
 	// animation_start(display_load, ANIM_MOVE_OFF);
+	display_load();
 	return true;
 }
 
