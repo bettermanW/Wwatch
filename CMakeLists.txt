@@ -71,6 +71,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Src/torch.c
         apps/Inc/stopwatch.h
         system/Src/tiem_sys.c
+        apps/Inc/games.h
+        apps/Src/games.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
