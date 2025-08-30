@@ -46,7 +46,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         common/typedef.h
         common/resourse.c
         common/resourse.h
-        common/config.h)
+        common/config.h
+        drivers_bsp/buzzer/buzzer.h
+        drivers_bsp/buzzer/buzzer.c)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -67,6 +69,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # 编译器会在这个路径下查找 #include "xxx.h"。
         test
         drivers_bsp/oled
+        drivers_bsp/buzzer
         system/Inc
         common
 )
