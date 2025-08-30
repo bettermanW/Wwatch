@@ -4,5 +4,14 @@
 
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
+#include "config.h"
+#include "stdbool.h"
+#include "menu.h"
+#if COMPILE_STOPWATCH
 
+void stopwatch_open(void);
+bool stopwatch_active(void);
+void stopwatch_update(void);
+
+#endif
 #endif //STOPWATCH_H
