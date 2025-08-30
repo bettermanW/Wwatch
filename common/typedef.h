@@ -189,6 +189,42 @@ typedef struct{
     #endif
 }appconfig_s;
 
+/***********************************蜂鸣器频率、类型、优先级******************************/
+
+// 枚举类型
+// TONE_VALUE = F_CPU / TONE_FREQ / 16
+/*主频是1Mhz进行了重新计算*/
+typedef enum {
+    TONE_STOP   = 0,       // 停止发声
+    TONE_PAUSE  = 1,       // 静音/暂停
+    TONE_REPEAT = 2,       // 循环播放
+    TONE_2KHZ   = 2000,    // 2 kHz
+    TONE_2_5KHZ = 2500,    // 2.5 kHz
+    TONE_3KHZ   = 3000,    // 3 kHz
+    TONE_3_5KHZ = 3500,    // 3.5 kHz
+    TONE_4KHZ   = 4000,    // 4 kHz
+    TONE_4_5KHZ = 4500,    // 4.5 kHz
+    TONE_5KHZ   = 5000     // 5 kHz
+} tone_t;
+
+/*蜂鸣器响的什么“目的”或“上下文”*/
+typedef enum {
+    VOL_OTHER = 0, // 其他用途
+    VOL_UI = 1, // 用于UI界面反馈音
+    VOL_ALARM = 2, // 用于警报音
+    VOL_HOUR = 3 // 用于整点报时
+} vol_t;
+
+/*表示蜂鸣器响声的“优先级”*/
+typedef enum {
+    PRIO_MIN = 0, // 最低优先级（几乎被任何声音覆盖）
+    PRIO_LOW = 1, // 低优先级（例如提示音）
+    PRIO_NML = 2, // 普通优先级（默认情况）
+    PRIO_HIGH = 3, // 高优先级
+    PRIO_MAX = 255 // 最高优先级（不可被打断）
+} tonePrio_t;
+
+/**/
 
 /***********************************菜单文本书籍******************************/
 /* MENU SETTINGS */
