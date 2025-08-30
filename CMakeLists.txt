@@ -37,9 +37,9 @@ enable_language(C ASM)
 # Create an executable object type
 # 创建一个名为 NwatchCopy 的 可执行文件目标（最终生成 .elf, .hex, .bin）
 add_executable(${CMAKE_PROJECT_NAME}
+        drivers_bsp/oled/oled.c
         test/test.c
         test/test_ulti.c
-
         system/Inc/draw.h
         system/src/draw.c
         system/Inc/button.h
@@ -60,7 +60,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         drivers_bsp/button_driver/button_driver.h
         apps/Inc/sleep.h
         apps/Src/sleep.c
-)
+
+        common/resourse.h
+        common/config.h)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
