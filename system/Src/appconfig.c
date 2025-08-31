@@ -3,7 +3,7 @@
 // Created by 14419 on 25-8-29.
 //
 #include "appconfig.h"
-
+appconfig_s appConfig;
 /**
  * @brief  从 EEPROM 读取，如果 EEPROM 未初始化，恢复默认值。
  */

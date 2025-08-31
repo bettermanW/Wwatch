@@ -1,7 +1,7 @@
 #include "buzzer.h"
 
 #define BUZZER_CHANNEL TIM_CHANNEL_4
-
+extern appconfig_s appConfig;
 extern TIM_HandleTypeDef htim4;
 static TIM_HandleTypeDef *g_HPWM_PassiveBuzzer = &htim4;
 

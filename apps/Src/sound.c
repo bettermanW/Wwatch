@@ -3,9 +3,8 @@
 //
 #include "sound.h"
 #define OPTION_COUNT		3
-
+extern appconfig_s appConfig;
 static prev_menu_s prevMenuData;
-
 static void mSelect(void);
 static void itemLoader();
 static void setVolumeUI(void);

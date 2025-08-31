@@ -6,7 +6,7 @@
 #define APPCONFIG_H
 #include "typedef.h"
 #include "eeprom.h"
-extern appconfig_s appConfig;
+
 // EEPROM 虚拟地址分配（每个字段一个16位地址）
 #define EE_ADDR_SLEEP_TIMEOUT   0x0001
 #define EE_ADDR_INVERT          0x0002
