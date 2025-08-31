@@ -6,6 +6,15 @@
 
 static void processButtons();
 
+
+void buttons_init(void)
+{
+
+    // Assign tunes
+    buttons[BTN_1].tune = tuneBtn1;
+    buttons[BTN_2].tune = tuneBtn2;
+    buttons[BTN_3].tune = tuneBtn3;
+}
 /**
  * @brief 保存旧地回调函数，设置新地回调函数
  * @param btn 哪一个按钮
@@ -86,6 +95,7 @@ static void processButton(s_button *button, bool isPressed) {
             // 绑定了函数指针 && 调用回调函数成功 && 保证本次只执行一次回调
             if (!button->funcDone && button->onPress != NULL && button->onPress()) {
                 button->funcDone = true;
+                tune_play(button->tune, VOL_UI, PRIO_UI);
                 // 蜂鸣器 + LED
             }
         }
