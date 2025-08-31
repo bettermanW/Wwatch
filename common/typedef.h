@@ -6,6 +6,7 @@
 #define TYPEDEF_H
 #include "stdint.h"
 #include "stdbool.h"
+#include "config.h"
 
 #define BUFFSIZE_STR_MENU   24 // 文本菜单24字节，包含23个字符+1个空终止符
 
@@ -191,7 +192,7 @@ typedef struct{
     bool display180; // 显示屏是否反转180
     bool invert; // 设置颜色反转
     #if COMPILE_ANIMATIONS
-        bool animation;
+        bool animations;
     #endif
     timemode_t timeMode;    // 控制时间的显示模式
     union {
@@ -240,8 +241,13 @@ typedef enum {
     PRIO_MAX = 255 // 最高优先级（不可被打断）
 } tonePrio_t;
 
-/**/
-
+/*动画数据结构*/
+typedef struct{
+    bool active;
+    uint8_t offsetY;
+    void (*animOnComplete)(void);
+    bool goingOffScreen;
+}anim_s;
 /***********************************菜单文本书籍******************************/
 /* MENU SETTINGS */
 #define STR_MAINMENU	"< MAIN MENU >"
@@ -262,12 +268,22 @@ typedef enum {
 #define STR_UI			"UI"
 #define STR_HOURBEEPS	"Hour beeps"
 
+#define STR_RESETMENU	"< Reset >"
+#define STR_RESET		"Reset"
+
 #define STR_TIMEDATE	"Time & date" //
 #define STR_SLEEP		"Sleep" //
 #define STR_SOUND		"Sound" //
 #define STR_DISPLAY		"Display"   //
 #define STR_DIAGNOSTICS	"Diagnostics"   // 诊断功能，查看设备状态、传感器或故障信息
 #define STR_SETTINGS	"Settings"
+/*Display*/
+#define STR_DISPLAYMENU	"< DISPLAY >"
+#define STR_BRIGHTNESS	"Brightness"
+#define STR_INVERT		"Invert"
+#define STR_ROTATE		"Rotate"
+#define STR_ANIMATIONS	"Animations"
+#define STR_LEDS		"LEDs"
 
 
 #define STR_BACK		"Back"  // 返回上一级菜单，约定通常放在最后一项
@@ -278,4 +294,6 @@ typedef enum {
 #define STR_GAME1		"Breakout"
 #define STR_GAME2		"Car Dodge"
 #define STR_GAME3		"Flappy Thing"
+#define STR_WIN			"WIN!"
+#define STR_GAMEOVER	"GAMEOVER!"
 #endif //TYPEDEF_H

@@ -5,7 +5,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define COMPILE_ANIMATIONS 0 // 动画
+#define COMPILE_ANIMATIONS 1 // 动画
 
 /*主菜单编译选项*/
 #define COMPILE_STOPWATCH  1 // 秒表
