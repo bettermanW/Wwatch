@@ -78,17 +78,26 @@ void buzzer_buzz(const uint32_t len, const tone_t tone, const tonePrio_t volType
         PassiveBuzzer_Control(0);
         return;
     }
-    uint8_t volPercent;
-    switch(volType) {
-        case VOL_UI:    volPercent = 30; break; // UI点击声小一点
-        case VOL_ALARM: volPercent = 80; break; // 警报声大
-        case VOL_HOUR:  volPercent = 50; break; // 整点报时中等
-        default:        volPercent = 20; break;
+    uint8_t vol;
+    switch(volType)
+    {
+        case VOL_UI:
+            vol = appConfig.volUI * 15;
+            break;
+        case VOL_ALARM:
+            vol = appConfig.volAlarm * 15;
+            break;
+        case VOL_HOUR:
+            vol = appConfig.volHour * 15;
+            break;
+        default:
+            vol =  2 * 15;
+            break;
     }
 
 
     // 设置频率和占空比
-    PassiveBuzzer_Set_Freq_Duty(tone, volPercent);
+    PassiveBuzzer_Set_Freq_Duty(tone, vol);
 }
 
 /**

@@ -7,6 +7,7 @@
 #include "stm32f1xx_hal.h"
 #include <stdbool.h>
 #include "typedef.h"
+#include "appconfig.h"
 
 
 
