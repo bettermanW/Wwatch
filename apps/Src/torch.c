@@ -15,7 +15,7 @@ static uint16_t strobe;
 static bool btnExit(void);
 static bool btnFlashRate(void);
 static display_t draw(void);
-
+extern appconfig_s appConfig;
 void torch_open()
 {
     // pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_BUSY);
@@ -33,7 +33,7 @@ void torch_open()
 static bool btnExit()
 {
     // pwrmgr_setState(PWR_ACTIVE_DISPLAY, PWR_STATE_NONE);
-    // LCD_SetColorTurn(appConfig.invert);
+    OLED_SetColorMode(appConfig.invert);
     display_load();
     return true;
 }

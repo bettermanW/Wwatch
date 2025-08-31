@@ -4,7 +4,7 @@
 #include "menu.h"
 
 #include "button.h"
-
+extern appconfig_s appConfig;
 static void doBtn(menu_f btn);
 
 
@@ -28,20 +28,17 @@ bool menu_isOpen(void) {
  */
 bool menu_select()
 {
-    // 没有动画效果👍
-    if(!menuData.isOpen) // 标志当前菜单没有打开
-    {
-        menuData.isOpen = true; // 设置菜单状态为 已打开
-        // 调用菜单主界面的初始化函数，绘制初始界面
-        mMainOpen();
-
-        char buf[64];
-        int len = sprintf(buf, "菜单 [%s] 已打开\r\n", menuData.title);
-        HAL_UART_Transmit(&huart2, (uint8_t*)buf, len, HAL_MAX_DELAY);
-
+    if (!animation_active() || animation_movingOn()) {
+        // 没有动画效果👍
+        if(!menuData.isOpen) // 标志当前菜单没有打开
+        {
+            menuData.isOpen = true; // 设置菜单状态为 已打开
+            // 调用菜单主界面的初始化函数，绘制初始界面
+            mMainOpen();
+        }
+        else if(menuData.func.btn3 != NULL)
+            menuData.func.btn3();
     }
-    else if(menuData.func.btn3 != NULL)
-        menuData.func.btn3();
     return true;
 }
 
@@ -124,7 +121,7 @@ static void menu_drawStr()
 }
 
 /**
- * 😭无动画
+ * 😭动画
  * @brief   用于绘制基于图标的菜单的函数，负责在屏幕上渲染菜单项的图标、选中框以及选中项的名称
  * @return  指示绘制是否完成
  */
@@ -136,8 +133,38 @@ static display_t menu_drawIcon()
      * 表示选中项的图标应位于屏幕中心的水平坐标
      */
     int x = 64 - (48 * menuData.selected);
+    display_t busy = DISPLAY_DONE;
 
-    animX = x;
+#if COMPILE_ANIMATIONS
+    if(appConfig.animations)
+    {
+        uint8_t speed;
+        if(x > animX)
+        {
+            speed = ((x - animX) / 4) + 1;
+            if(speed > 16)
+                speed = 16;
+            animX += speed;
+            if(x <= animX)
+                animX = x;
+            else
+                busy = DISPLAY_BUSY;
+        }
+        else if(x < animX)
+        {
+            speed = ((animX - x) / 4) + 1;
+            if(speed > 16)
+                speed = 16;
+            animX -= speed;
+            if(x >= animX)
+                animX = x;
+            else
+                busy = DISPLAY_BUSY;
+        }
+    }
+    else
+#endif
+        animX = x;
 
     x = animX - 16; // 将绘制起点向左偏移 16 像素。
 
@@ -400,4 +427,13 @@ void doAction(bool anim)
     loader(OPERATION_ACTION, menuData.selected, anim);
 }
 
+/*****************动画*******************/
+void beginAnimation(menu_f onComplete)
+{
+    animation_start(onComplete, ANIM_MOVE_OFF);
+}
 
+void beginAnimation2(menu_f onComplete)
+{
+    animation_start(onComplete, ANIM_MOVE_ON);
+}

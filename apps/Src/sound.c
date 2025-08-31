@@ -22,7 +22,7 @@ void mSoundOpen()
 
     setPrevMenuOpen(&prevMenuData, mSoundOpen);
 
-    // beginAnimation2(NULL);
+    beginAnimation2(NULL);
 }
 
 static void mSelect()

@@ -91,6 +91,18 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Src/sleep.c
         apps/Inc/sound.h
         apps/Src/sound.c
+        apps/Inc/reset.h
+        apps/Src/reset.c
+        system/Inc/animation.h
+        system/src/animation.c
+        apps/Inc/m_display.h
+        apps/Src/m_display.c
+        apps/Inc/game1.h
+        apps/Src/game1.c
+        system/Inc/tune.h
+        system/src/tune.c
+        system/Inc/tunes.h
+        system/src/tunes.c
 
 )
 

@@ -60,7 +60,7 @@ static void mOpen()
     // 保存当前菜单状态到 `prevMenuData`，方便后续退出返回
     setPrevMenuOpen(&prevMenuData, mOpen);
 
-    // beginAnimation2(NULL);
+    beginAnimation2(NULL);
 }
 
 /**
