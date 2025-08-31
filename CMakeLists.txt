@@ -62,6 +62,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Inc/sound.h
         apps/Src/sound.c
 
+        common/config.h
+        drivers_bsp/buzzer/buzzer.h
+        drivers_bsp/buzzer/buzzer.c
         system/Inc/appconfig.h
         common/resourse.h
         common/config.h
@@ -91,6 +94,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         common
         apps/Inc
         drivers_bsp/oled
+        drivers_bsp/buzzer
         drivers_bsp/eeprom
         system/Inc
         drivers_bsp/button_driver
