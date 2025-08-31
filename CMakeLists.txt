@@ -48,7 +48,14 @@ add_executable(${CMAKE_PROJECT_NAME}
         common/resourse.h
         common/config.h
         drivers_bsp/buzzer/buzzer.h
-        drivers_bsp/buzzer/buzzer.c)
+        drivers_bsp/buzzer/buzzer.c
+        system/Inc/appconfig.h
+        common/resourse.h
+        common/config.h
+        drivers_bsp/eeprom/eeprom.c
+        drivers_bsp/eeprom/eeprom.h
+        system/src/appconfig.c
+)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -70,6 +77,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         test
         drivers_bsp/oled
         drivers_bsp/buzzer
+        drivers_bsp/eeprom
         system/Inc
         common
 )
