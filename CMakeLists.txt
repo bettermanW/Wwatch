@@ -37,10 +37,17 @@ enable_language(C ASM)
 # Create an executable object type
 # 创建一个名为 NwatchCopy 的 可执行文件目标（最终生成 .elf, .hex, .bin）
 add_executable(${CMAKE_PROJECT_NAME}
+        drivers_bsp/oled/oled.c
         test/test.c
         test/test_ulti.c
+
         system/Inc/draw.h
         system/src/draw.c
+        system/Inc/button.h
+        system/Src/button.c
+        system/src/display.c
+        system/Inc/display.h
+
         common/ulti.h
         common/typedef.h
         common/resourse.c
@@ -75,6 +82,26 @@ add_executable(${CMAKE_PROJECT_NAME}
         apps/Src/games.c
         apps/Inc/sleep.h
         apps/Src/sleep.c
+
+
+        apps/Inc/menu.h
+        apps/Src/menu.c
+
+        drivers_bsp/oled/oled.c
+        drivers_bsp/button_driver/button_driver.c
+        drivers_bsp/button_driver/button_driver.h
+        apps/Inc/sound.h
+        apps/Src/sound.c
+
+        common/config.h
+        drivers_bsp/buzzer/buzzer.h
+        drivers_bsp/buzzer/buzzer.c
+        system/Inc/appconfig.h
+        common/resourse.h
+        common/config.h
+        drivers_bsp/eeprom/eeprom.c
+        drivers_bsp/eeprom/eeprom.h
+        system/src/appconfig.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
@@ -95,12 +122,17 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     # 编译器会在这个路径下查找 #include "xxx.h"。
         test
+        common
+        apps/Inc
         drivers_bsp/oled
         drivers_bsp/button_driver
         drivers_bsp/time
+        drivers_bsp/buzzer
+        drivers_bsp/eeprom
         system/Inc
         common
         apps/Inc
+        drivers_bsp/button_driver
 )
 
 # Add project symbols (macros)  添加编译宏定义

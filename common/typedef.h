@@ -178,15 +178,31 @@ typedef struct{
 } prev_menu_s;
 
 /***********************************应用程序配置参数**************************/
+typedef enum
+{
+    TIMEMODE_24HR = 0,
+    TIMEMODE_12HR = 1
+} timemode_t;
+
 typedef struct{
     bool showFPS; // 是否显示FPS信息
     uint8_t sleepTimeout; // 控制设备进入睡眠模式的超时时间
     bool CTRL_LEDs ;// 是否启用LED灯效果
     bool display180; // 显示屏是否反转180
-    bool invent; // 设置颜色反转
+    bool invert; // 设置颜色反转
     #if COMPILE_ANIMATIONS
         bool animation;
     #endif
+    timemode_t timeMode;    // 控制时间的显示模式
+    union {
+        uint8_t volumes;
+        struct{ // get rid of these bitfields?
+            uint8_t volUI:2;
+            uint8_t volAlarm:2;
+            uint8_t volHour:2;
+            uint8_t brightness:2;
+        };
+    };
 }appconfig_s;
 
 /***********************************蜂鸣器频率、类型、优先级******************************/
@@ -238,8 +254,13 @@ typedef enum {
 #define STR_TUNEMAKER	"Tune maker"
 #define STR_GAMES		"Games"
 
+/*SETTINGS*/
 #define STR_SLEEPMENU	"< SLEEP >"
 #define STR_TIMEOUT		"Timeout"
+
+#define STR_SOUNDMENU	"< SOUND >"
+#define STR_UI			"UI"
+#define STR_HOURBEEPS	"Hour beeps"
 
 #define STR_TIMEDATE	"Time & date" //
 #define STR_SLEEP		"Sleep" //
