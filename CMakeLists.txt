@@ -39,33 +39,72 @@ enable_language(C ASM)
 add_executable(${CMAKE_PROJECT_NAME}
         test/test.c
         test/test_ulti.c
-        system/Inc/draw.h
-        system/src/draw.c
-        common/ulti.h
-        common/typedef.h
-        common/resourse.c
-        common/resourse.h
-        common/config.h
-        apps/Inc/m_main.h
-        apps/Inc/menu.h
-        apps/Inc/normal.h
-        apps/Inc/settings.h
-        apps/Inc/watchface.h
-        apps/Src/m_main.c
-        apps/Src/menu.c
-        apps/Src/normal.c
-        apps/Src/settings.c
-        apps/Src/watchface.c
+
         drivers_bsp/button_driver/button_driver.c
         drivers_bsp/button_driver/button_driver.h
         drivers_bsp/oled/oled.c
         drivers_bsp/oled/oled.h
         drivers_bsp/time/kk_time.c
         drivers_bsp/time/kk_time.h
+        drivers_bsp/buzzer/buzzer.h
+        drivers_bsp/buzzer/buzzer.c
+        drivers_bsp/eeprom/eeprom.c
+        drivers_bsp/eeprom/eeprom.h
+
+
+        system/Inc/draw.h
+        system/src/draw.c
         system/Inc/button.h
+        system/Src/button.c
+        system/src/display.c
         system/Inc/display.h
-        system/src/button.c
-        system/src/display.c)
+        system/Inc/appconfig.h
+        system/src/appconfig.c
+        system/Src/tiem_sys.c
+        system/Inc/time_sys.h
+
+        common/ulti.h
+        common/typedef.h
+        common/resourse.c
+        common/resourse.h
+        common/config.h
+
+        apps/Inc/menu.h
+        apps/Src/menu.c
+
+        apps/Inc/m_main.h
+        apps/Src/m_main.c
+        apps/Inc/watchface.h
+        apps/Src/watchface.c
+        apps/Inc/normal.h
+        apps/Src/normal.c
+
+        apps/Inc/settings.h
+        apps/Src/settings.c
+        apps/Inc/stopwatch.h
+        apps/Src/stopwatch.c
+        apps/Inc/torch.h
+        apps/Src/torch.c
+        apps/Inc/games.h
+        apps/Src/games.c
+        apps/Inc/sleep.h
+        apps/Src/sleep.c
+        apps/Inc/sound.h
+        apps/Src/sound.c
+        apps/Inc/reset.h
+        apps/Src/reset.c
+        system/Inc/animation.h
+        system/src/animation.c
+        apps/Inc/m_display.h
+        apps/Src/m_display.c
+        apps/Inc/game1.h
+        apps/Src/game1.c
+        system/Inc/tune.h
+        system/src/tune.c
+        system/Inc/tunes.h
+        system/src/tunes.c
+
+)
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
 add_subdirectory(cmake/stm32cubemx)
@@ -88,6 +127,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         drivers_bsp/oled
         drivers_bsp/button_driver
         drivers_bsp/time
+        drivers_bsp/buzzer
+        drivers_bsp/eeprom
         system/Inc
         common
         apps/Inc

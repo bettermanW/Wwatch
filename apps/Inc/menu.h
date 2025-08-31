@@ -15,6 +15,8 @@
 #include "draw.h"
 #include "resourse.h"
 #include "display.h"
+#include "animation.h"
+#include "appconfig.h"
 // max number of items to show on screen (can have more, but they won't be shown)
 //一次可显示的菜单项数量。
 #define MAX_MENU_ITEMS 7
@@ -42,4 +44,7 @@ void nextOption();
 void prevOption();
 void back();
 void addBackOption();
+bool exitSelected();
+void beginAnimation(menu_f onComplete);
+void beginAnimation2(menu_f onComplete);
 #endif //MENU_H

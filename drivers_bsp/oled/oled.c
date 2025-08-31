@@ -122,6 +122,32 @@ void OLED_SetColorMode(OLED_ColorMode mode) {
     }
 }
 
+/**
+ * @brief 0x81 + 1字节参数 → 设置对比度（contrast control）
+ * @param brightness
+ */
+void OLED_Backlight(uint8_t brightness)
+{
+    OLED_SendCmd(0x81);         // 设置对比度命令
+    OLED_SendCmd(brightness);   // 取值 0~255
+}
+
+void OLED_DisplayTurn_CH1116(uint8_t flag)
+{
+    if(flag == 0) // 翻转180度
+    {
+        OLED_SendCmd(0xA1); // SEG0~127映射翻转
+        OLED_SendCmd(0xC8); // COM0~7映射翻转
+        OLED_SendCmd(0xA6); // 正常显示（非反色）
+    }
+    else // 正常方向
+    {
+        OLED_SendCmd(0xA0); // SEG0~127映射正常
+        OLED_SendCmd(0xC0); // COM0~7映射正常
+        OLED_SendCmd(0xA6); // 正常显示
+    }
+}
+
 // ========================== 显存操作函数 ==========================
 
 /**

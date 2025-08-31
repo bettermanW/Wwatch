@@ -20,6 +20,8 @@ void OLED_Init();
 void OLED_DisPlay_On();
 void OLED_DisPlay_Off();
 void OLED_SetColorMode(OLED_ColorMode mode);
+void OLED_Backlight(uint8_t brightness);
+void OLED_DisplayTurn_CH1116(uint8_t flag);
 
 void OLED_NewFrame();
 void OLED_ShowFrame();

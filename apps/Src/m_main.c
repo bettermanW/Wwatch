@@ -60,7 +60,7 @@ static void mOpen()
     // 保存当前菜单状态到 `prevMenuData`，方便后续退出返回
     setPrevMenuOpen(&prevMenuData, mOpen);
 
-    // beginAnimation2(NULL);
+    beginAnimation2(NULL);
 }
 
 /**
@@ -83,10 +83,10 @@ static void itemLoader(uint8_t num)
     num = 0;
     setMenuOption(num++, STR_ALARMS, menu_alarm, NULL);
 #if COMPILE_TORCH
-    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, NULL);
+    setMenuOption(num++, STR_FLASHLIGHT, menu_torch, torch_open);
 #endif
 #if COMPILE_STOPWATCH
-    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, NULL);
+    setMenuOption(num++, (STR_STOPWATCH), menu_stopwatch, stopwatch_open);
 #endif
 #if COMPILE_BTRCCAR
     setMenuOption(num++, (STR_BTRCCAR), menu_stopwatch, btrccar_open);
@@ -95,7 +95,7 @@ static void itemLoader(uint8_t num)
     setMenuOption(num++, (STR_TUNEMAKER), menu_tunemaker, NULL);
 #endif
 #if COMPILE_GAME1 || COMPILE_GAME2 || COMPILE_GAME3
-    setMenuOption(num++, (STR_GAMES), menu_games, NULL);
+    setMenuOption(num++, (STR_GAMES), menu_games, mGamesOpen);
 #endif
 
     setMenuOption(num++, (STR_SETTINGS), menu_settings, mSettingsOpen);

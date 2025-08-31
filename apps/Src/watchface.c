@@ -283,8 +283,8 @@ display_f watchfaceOpen(void) {
     //appConfig.showFPS = 0;
     // 将函数注册为当前界面的绘图函数每次刷新时会自动调用它
     display_setDrawFunc(draw);
-    //draw();
     // 设置当前界面的按钮响应函数；
     buttons_setFuncs(up, down, menu_select);
+    animation_start(NULL, ANIM_MOVE_ON);
     return DISPLAY_DONE;
 }

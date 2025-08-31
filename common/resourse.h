@@ -28,6 +28,11 @@ extern const uint8_t battIconEmpty[];
 extern const uint8_t battIconLow[];
 extern const uint8_t battIconHigh[];
 extern const uint8_t battIconFull[];
+extern const uint8_t usbIcon[];
+extern const uint8_t chargeIcon[];
+extern const uint8_t stopwatch[];
+
+
 
 extern const char days[7][BUFFSIZE_STR_DAYS];
 extern const char months[12][BUFFSIZE_STR_MONTHS];
@@ -53,9 +58,19 @@ extern const uint8_t menu_sleep[];
 extern const uint8_t menu_sound[];
 extern const uint8_t menu_display[];
 extern const uint8_t menu_diagnostic[];
+
+
+extern const uint8_t menu_sleeptimeout[];
+extern const uint8_t menu_volume[][128];
+
+
+/*Display*/
 extern const uint8_t menu_rotate[];
+extern const uint8_t menu_brightness[][128];
+extern const uint8_t menu_invert[];
+extern const uint8_t menu_anim[][128];
+extern const uint8_t menu_LEDs[][128];
 
-
-
-
+/*GAME*/
+extern const uint8_t livesImg[];
 #endif //RESOURSE_H

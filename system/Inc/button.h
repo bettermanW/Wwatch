@@ -9,6 +9,8 @@
 #include "stm32f1xx_hal.h"
 #include "button_driver.h"
 #include "ulti.h"
+#include "tune.h"
+#include "tunes.h"
 // 定义按钮索引编号
 typedef enum {
     BTN_1 = 0,
@@ -33,6 +35,7 @@ typedef struct {
     uint8_t counter;			// 用于按键防抖的“位移缓存”
     bool funcDone;			// 是否已经执行过按键处理函数（防止重复调用）
     button_f onPress;		// 回调函数（用户功能逻辑）
+    const tune_t* tune;	    // 按键音
 } s_button;
 /*即每个按钮 `BTN_1 ~ BTN_3` 都有一个 `s_button` 实例，用数组统一管理。*/
 static s_button buttons[BTN_COUNT];
@@ -41,7 +44,7 @@ static s_button buttons[BTN_COUNT];
 #define BTN_IS_PRESSED	2 // 认为按键真的按下去 所需的最少 1 的数量。
 #define BTN_NOT_PRESSED	2 // 认为按键真的松开 所需的最多 1 的数量。
 
-
+void buttons_init(void);
 void buttons_update(void);
 button_f buttons_setFunc(btn_t btn, button_f func);
 void buttons_setFuncs(button_f, button_f, button_f);
