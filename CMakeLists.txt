@@ -47,11 +47,11 @@ add_executable(${CMAKE_PROJECT_NAME}
         common/resourse.c
         common/resourse.h
         system/Inc/appconfig.h
-        system/Src/appconfig.c
         common/resourse.h
         common/config.h
         drivers_bsp/eeprom/eeprom.c
         drivers_bsp/eeprom/eeprom.h
+        system/src/appconfig.c
 )
 
 # Add STM32CubeMX generated sources 添加 STM32CubeMX 生成的代码
