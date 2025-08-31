@@ -30,7 +30,7 @@ void mGamesOpen()
 
     setPrevMenuOpen(&prevMenuData, mGamesOpen);
 
-    // beginAnimation2(NULL);
+    beginAnimation2(NULL);
 }
 
 static void mSelect()
@@ -43,7 +43,7 @@ static void itemLoader(uint8_t num)
 {
     num = 0;
 #if COMPILE_GAME1
-    setMenuOption(num++, (STR_GAME1), NULL, NULL );
+    setMenuOption(num++, (STR_GAME1), NULL, game1_start );
 #endif
 #if COMPILE_GAME2
     setMenuOption(num++, (STR_GAME2), NULL, NULL);

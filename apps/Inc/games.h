@@ -7,6 +7,7 @@
 #include "menu.h"
 #include "typedef.h"
 #include "config.h"
+#include "game1.h"
 
 void mGamesOpen(void);
 #endif //GAMES_H
