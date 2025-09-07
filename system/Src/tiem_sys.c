@@ -8,7 +8,8 @@
 extern  timeDate_s timeDate;
 char* time_timeStr()
 {
+    struct tm* now;
     static char buff[BUFFSIZE_TIME_FORMAT_SMALL];
-    sprintf(buff, "%02d:%02d%c", timeDate.time.hour, timeDate.time.mins, timeDate.time.ampm);
+    sprintf(buff, "%02d:%02d%c", now->tm_hour, now->tm_sec, 'A');
     return buff;
 }

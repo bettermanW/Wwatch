@@ -2,17 +2,18 @@
 // Created by 14419 on 25-8-22.
 #include "normal.h"
 
-static void drawDate();
+#include "kk_time.h"
+
+static void drawDate(struct tm* now);
 static display_t draw();
-static display_t ticker();
+static display_t ticker(struct tm* now);
 static void drawTickerNum(tickerData_t* data);
-static bool animateIcon(bool active, uint8_t* pos);
 
 
 
-extern timeDate_s timeDate; // 定义时间结构体
+
 extern appconfig_s appConfig;
-uint32_t milliseconds;
+
 
 
 
@@ -51,9 +52,10 @@ void watchface_normal()
 static display_t draw()
 {
 
+    struct  tm* now = KK_RTC_GetTime();
     /*一、绘制日期*/
-    drawDate();
-    ticker();
+    drawDate(now);
+    ticker(now);
     drawBattery();
     // display_t busy = ticker();
     /*二、数字滚动动画*/
@@ -67,19 +69,20 @@ static display_t draw()
 /**
  * @brief 绘制日期字符串
  */
-static void drawDate()
+static void drawDate(struct tm* now)
 {
+
     // 星期几
-    char day[BUFFSIZE_STR_DAYS];
-    strcpy(day, days[timeDate.date.day]);
+    char wday[BUFFSIZE_STR_DAYS];
+    strcpy(wday, days[now->tm_wday]);
 
     // Get month string 月份字符串
     char month[BUFFSIZE_STR_MONTHS];
-    strcpy(month, months[timeDate.date.month]);
+    strcpy(month, months[now->tm_mon]);
 
     // 准备最终显示字符串
     char buff[BUFFSIZE_DATE_FORMAT];
-    sprintf(buff, "%s %02d %s %04u", day, timeDate.date.date, month, timeDate.date.year);
+    sprintf(buff, "%s %02d %s %04d", wday, now->tm_mday, month, now->tm_year + 1900);
     draw_string(buff,false,12,0);
 }
 
@@ -88,7 +91,7 @@ static void drawDate()
  * @return DISPLAY_BUSY: 动画进行中
  *         DISPLAY_DONE: 动画完成
  */
-static display_t ticker() {
+static display_t ticker(struct  tm* now) {
 
     // ---------- 静态变量，保持跨帧状态 ----------
     static uint8_t yPos;            // 小时/分钟滚动偏移
@@ -103,22 +106,22 @@ static display_t ticker() {
 
     if(appConfig.animations)
     {
-        if(timeDate.time.secs != secs)
+        if(now->tm_sec != secs)
         {
             yPos = 0;
             yPos_secs = 0;
             moving = true;
 
-            moving2[0] = div10(timeDate.time.hour) != div10(hour2);
-            moving2[1] = mod10(timeDate.time.hour) != mod10(hour2);
-            moving2[2] = div10(timeDate.time.mins) != div10(mins);
-            moving2[3] = mod10(timeDate.time.mins) != mod10(mins);
-            moving2[4] = div10(timeDate.time.secs) != div10(secs);
+            moving2[0] = div10(now->tm_hour) != div10(hour2);
+            moving2[1] = mod10(now->tm_hour) != mod10(hour2);
+            moving2[2] = div10(now->tm_min) != div10(mins);
+            moving2[3] = mod10(now->tm_min) != mod10(mins);
+            moving2[4] = div10(now->tm_sec) != div10(secs);
 		
             //memcpy(&timeDateLast, &timeDate, sizeof(timeDate_s));
-            hour2 = timeDate.time.hour;
-            mins = timeDate.time.mins;
-            secs = timeDate.time.secs;
+            hour2 = now->tm_hour;
+            mins = now->tm_min;
+            secs = now->tm_sec;
         }
 
         if(moving)
@@ -178,14 +181,14 @@ static display_t ticker() {
     data.w = FONT_SMALL2_WIDTH;
     data.h = FONT_SMALL2_HEIGHT;
     data.offsetY = yPos_secs;        // 秒滚动偏移
-    data.val = div10(timeDate.time.secs);
+    data.val = div10(now->tm_sec);
     data.maxVal = 5;
     data.moving = moving2[4];        // 是否滚动
     drawTickerNum(&data);
 
     // 秒个位
     data.x = 116;
-    data.val = mod10(timeDate.time.secs);
+    data.val = mod10(now->tm_sec);
     data.maxVal = 9;
     data.moving = moving;
     drawTickerNum(&data);
@@ -199,42 +202,42 @@ static display_t ticker() {
 
     // 分钟十位
     data.x = 60;
-    data.val = div10(timeDate.time.mins);
+    data.val = div10(now->tm_min);
     data.maxVal = 5;
     data.moving = moving2[2];
     drawTickerNum(&data);
 
     // 分钟个位
     data.x = 83;
-    data.val = mod10(timeDate.time.mins);
+    data.val = mod10(now->tm_min);
     data.maxVal = 9;
     data.moving = moving2[3];
     drawTickerNum(&data);
 
     // 小时十位
     data.x = 1;
-    data.val = div10(timeDate.time.hour);
+    data.val = div10(now->tm_hour);
     data.maxVal = 5;
     data.moving = moving2[0];
     drawTickerNum(&data);
 
     // 小时个位
     data.x = 24;
-    data.val = mod10(timeDate.time.hour);
+    data.val = mod10(now->tm_hour);
     data.maxVal = 9;
     data.moving = moving2[1];
     drawTickerNum(&data);
 
     // ---------- 绘制冒号，每半秒闪烁 ----------
-    if(milliseconds % 3600 > 1800)
+    if(HAL_GetTick() % 3600 > 1800)
         draw_bitmap(TIME_POS_X + 46 + 2, TIME_POS_Y, colon,
                     FONT_COLON_WIDTH, FONT_COLON_HEIGHT, NOINVERT, 0);
 
     // ---------- 绘制 AM/PM ----------
-    char tmp[2];
-    tmp[0] = timeDate.time.ampm;
-    tmp[1] = 0x00;
-    draw_string(tmp, false, 104, 20);
+    // char tmp[2];
+    // tmp[0] = timeDate.time.ampm;
+    // tmp[1] = 0x00;
+    // draw_string(tmp, false, 104, 20);
 
     // ---------- 返回动画状态 ----------
     return (moving ? DISPLAY_BUSY : DISPLAY_DONE);
@@ -247,18 +250,23 @@ static display_t ticker() {
  */
 static void drawTickerNum(tickerData_t* data)
 {
-    // 每个数字图像所占用的字节数
     uint8_t arraySize = (data->w * data->h) / 8;
-
-    // 找到当前数字对应的位图
+    uint8_t yPos = data->offsetY;
     const uint8_t* bitmap = &data->bitmap[data->val * arraySize];
-
-    // 绘制位置
     uint8_t x = data->x;
     uint8_t y = data->y;
 
-    // 直接绘制当前数字，不再考虑滚动
-    draw_bitmap(x, y, bitmap, data->w, data->h, NOINVERT, 0);
+    if(!data->moving || yPos == 0 || yPos == 255)
+        draw_bitmap(x, y, bitmap, data->w, data->h, NOINVERT, 0);
+    else
+    {
+        uint8_t prev = data->val - 1;
+        if(prev == 255)
+            prev = data->maxVal;
+
+        draw_bitmap(x, y, bitmap, data->w, data->h, NOINVERT, yPos - data->h - TICKER_GAP);
+        draw_bitmap(x, y, &data->bitmap[prev * arraySize], data->w, data->h, NOINVERT, yPos);
+    }	
 }
 
 

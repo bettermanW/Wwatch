@@ -4,6 +4,7 @@
 
 #ifndef TIME_SYS_H
 #define TIME_SYS_H
+#include <time.h>
 #include "typedef.h"
 #include <stdio.h>
 

@@ -47,7 +47,7 @@ void buttons_update() {
     static uint32_t lastUpdate;
     uint32_t now = HAL_GetTick();
 
-    if ((uint32_t) (now - lastUpdate) >= 10) {
+    if (now - lastUpdate >= 10) {
         lastUpdate = now;
         processButtons();
     }

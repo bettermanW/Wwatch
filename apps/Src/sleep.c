@@ -6,7 +6,7 @@
 //
 #include "sleep.h"
 
-#define OPTION_COUNT	1
+#define OPTION_COUNT	2
 extern menu_s menuData;
 static prev_menu_s prevMenuData;
 extern appconfig_s appConfig;

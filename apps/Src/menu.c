@@ -2,7 +2,7 @@
 // Created by 14419 on 25-8-23.
 //
 #include "menu.h"
-
+#include <math.h>
 #include "button.h"
 extern appconfig_s appConfig;
 static void doBtn(menu_f btn);
@@ -94,7 +94,7 @@ static void drawTitle()
     char buff[BUFFSIZE_STR_MENU];
     memset(buff, ' ', sizeof(buff));
     // 计算标题居中偏移
-    strcpy((buff + (9 - (strlen(menuData.title) / 2))),menuData.title);
+    strcpy((buff + (9 - strlen(menuData.title) / 2)),menuData.title);
     draw_string(buff, false, 0, 0);
 }
 
@@ -107,7 +107,7 @@ static void menu_drawStr()
 
     uint8_t scroll = menuData.scroll; // 获取当前滚动偏移量
     // 计算显示的菜单项范围 菜单项总数optionCount
-    uint8_t count = ((MAX_MENU_ITEMS < menuData.optionCount) ? MAX_MENU_ITEMS : menuData.optionCount) + scroll;
+    const uint8_t count = (MAX_MENU_ITEMS < menuData.optionCount ? MAX_MENU_ITEMS : menuData.optionCount) + scroll;
     // 遍历显示范围内的菜单项
     for(uint8_t i=scroll;i<count;i++)
     {
@@ -231,7 +231,7 @@ void setMenuOption(const uint8_t num, const char* name, const uint8_t* icon, con
         case OPERATION_DRAWICON: // 绘制图标
         {
             // const uint8_t a = operation.data;
-
+            //
             // const float x = ((a/(float)(FRAME_WIDTH-32)) * (M_PI / 2)) + (M_PI / 4);
             // uint8_t y = (sin(x) * 32); //             // 使用正弦函数基于`a`计算动态Y坐标
             const uint8_t y = 28; // comment this out for magic
