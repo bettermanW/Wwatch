@@ -103,6 +103,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         system/src/tune.c
         system/Inc/tunes.h
         system/src/tunes.c
+        apps/Inc/timedate.h
+        apps/Src/timedate.c
 
 )
 
